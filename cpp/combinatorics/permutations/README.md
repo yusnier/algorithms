@@ -15,6 +15,6 @@ permutation. The following table shows a comparison of the two algorithms:
 
 ## Implemented algorithms (C++14)
 - Narayana Panditha’s algorithm
-    - [Next permutation](https://www.google.com) in lexicographical order.
-    - [Previous permutation](https://www.google.com) in lexicographical order.
-- [Heap's algorithm (iterative version)](https://www.google.com) generates all possible permutations.
+    - [Next permutation](https://github.com/yusnier/algorithms/blob/main/cpp/combinatorics/permutations/next_permutation.cpp) in lexicographical order.
+    - [Previous permutation](https://github.com/yusnier/algorithms/blob/main/cpp/combinatorics/permutations/prev_permutation.cpp) in lexicographical order.
+- [Heap's algorithm (iterative version)](https://github.com/yusnier/algorithms/blob/main/cpp/combinatorics/permutations/heap_generator.cpp) generates all possible permutations.
