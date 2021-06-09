@@ -11,7 +11,7 @@ permutation. The following table shows a comparison of the two algorithms:
 | Algorithm         | Lexicographical ordered | Skip permutations with repeated elements | Space complexity | Time complexity for all permutation generation | Time complexity for each permutation |
 |:---               |:----:   |:----:   |:----:    |:----: |:----:    |
 | Narayana Panditha | **YES** | **YES** | **O(1)** | O(n!) | O(n)     |
-| Heap              | NO      | NO      | O(n)     | O(n!) | **O(n)** |
+| Heap              | NO      | NO      | O(n)     | O(n!) | **O(1)** |
 
 ## Implemented algorithms (C++14)
 - Narayana Panditha’s algorithm
