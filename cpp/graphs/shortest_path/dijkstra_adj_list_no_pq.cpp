@@ -49,24 +49,29 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
     int min_vertex = src_vertex;
 
     // The loop stops either when:
-    // min_vertex == vertices -> All vertices were already visited and relaxed. OR
+    // min_vertex == vertices -> All vertices were already visited and relaxed OR
     // dist[min_vertex] == POSITIVE_INFINITY -> remaining unvisited nodes are not reachable from 'src_node'.
     while (min_vertex < vertices && dist[min_vertex] != POSITIVE_INFINITY) {
         visited[min_vertex] = true;
-        // For each vertex from 'min_vertex', apply relaxation for all the edges.
+        // For each vertex from 'vertex', apply relaxation for all the edges, except those already visited,
+        // because this means that they already have the best possible distance.
         for (const auto &edge: graph.adj_list(min_vertex)) {
-            if (!visited[edge.to] && dist[edge.from] + edge.cost < dist[edge.to]) {
+            if (visited[edge.to]) { continue; }
+            if (dist[edge.from] + edge.cost < dist[edge.to]) {
                 dist[edge.to] = dist[edge.from] + edge.cost;
                 prev[edge.to] = edge.from;
             }
         }
 
-        // If what we want is just to find the shortest path between 2 vertices: 'src_vertex' -> 'dest_vertex',
-        // we can return earlier at this point once we reach 'dest_vertex' improving the performance.
-        // We just need to add 'dest_vertex' as a new parameter and uncomment this conditional block:
-        //if (min_vertex == dest_vertex) {
+        // If we are trying to solve 'Single Pair Shortest Path (SPSP)' we can add a new function parameter
+        // 'dest_vertex' and if the reconstruction of the shortest path is required we uncomment this block:
+        //if (vertex == dest_vertex) {
         //    break;
         //}
+        // But, if the reconstruction is not required, we can modify the function to return only the shortest
+        // distance at this point: 'return dist[dest_vertex]', also putting a 'return POSITIVE_INFINITY' at the
+        // end of the function instead of returning a 'dijkstra_result', which means that 'dest_vertex' is not
+        // reachable from 'src_vertex'.
 
         // Looking for the most promising vertex, which is the unvisited one with the shortest distance,
         // that distance not equal to infinity which means that it's a reachable vertex from 'src_vertex.
@@ -83,25 +88,30 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
     return dijkstra_result{src_vertex, dist, prev};
 }
 
-void display_shortest_paths(const dijkstra_result &res) {
-    const int vertices = static_cast<int>(res.dist.size());
-    for (auto i = 0; i < vertices; ++i) {
-        std::cout << "From " << res.src_vertex << " to " << i << ": [" << std::setw(4) << res.dist[i] << "] ";
-        if (res.dist[i] == POSITIVE_INFINITY) {
-            std::cout << "[unreachable]";
-        } else {
-            std::vector<int> path(1, i);
-            for (auto j = res.prev[i]; j != -1; j = res.prev[j]) {
-                path.push_back(j);
-            }
-            std::reverse(path.begin(), path.end());
-            std::cout << "[" << path[0];
-            for (auto j = 1; j < path.size(); ++j) {
-                std::cout << " -> " << path[j] << "";
-            }
-            std::cout << "]";
+void display_shortest_path(const dijkstra_result &res, int dest_vertex) {
+    std::cout << "From " << res.src_vertex << " to " << dest_vertex << ": ["
+              << std::setw(4) << res.dist[dest_vertex] << "] ";
+    if (res.dist[dest_vertex] == POSITIVE_INFINITY) {
+        std::cout << "[unreachable]";
+    } else {
+        std::vector<int> path;
+        for (auto at = dest_vertex; at != -1; at = res.prev[at]) {
+            path.push_back(at);
         }
-        std::cout << std::endl;
+        std::reverse(path.begin(), path.end());
+        std::cout << "[" << path[0];
+        for (auto i = 1; i < path.size(); ++i) {
+            std::cout << " -> " << path[i] << "";
+        }
+        std::cout << "]";
+    }
+    std::cout << std::endl;
+}
+
+void display_all_shortest_paths(const dijkstra_result &res) {
+    const int vertices = static_cast<int>(res.dist.size());
+    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+        display_shortest_path(res, dest_vertex);
     }
 }
 
@@ -121,7 +131,7 @@ int main() {
         g.add_edge(3, {3, 5, 6});
         g.add_edge(4, {4, 5, 1});
         const dijkstra_result result = dijkstra(g, 0);
-        display_shortest_paths(result);
+        display_all_shortest_paths(result);
     }
     return 0;
 }
