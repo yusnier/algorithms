@@ -12,6 +12,11 @@ add_executable(bellman_ford_adj_matrix graphs/shortest_path/bellman_ford_adj_mat
 add_executable(bellman_ford_edge_list graphs/shortest_path/bellman_ford_edge_list.cpp)
 
 add_executable(dijkstra_adj_list graphs/shortest_path/dijkstra_adj_list.cpp)
+add_executable(dijkstra_adj_list_pq graphs/shortest_path/dijkstra_adj_list_pq.cpp)
 add_executable(dijkstra_adj_matrix graphs/shortest_path/dijkstra_adj_matrix.cpp)
+add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_pq.cpp)
+
+add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
 
 add_executable(test test.cpp)
+add_executable(test2 test2.cpp)
