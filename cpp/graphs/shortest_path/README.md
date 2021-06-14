@@ -26,5 +26,7 @@
   using the destination as the starting vertex, then we can build the paths by reversing the order.
   For the particular case of directed graphs, we also need to reverse the edges before applying the
   **SSSP** algorithm.
+
 ###Finding the (Cheapest/Negative) Cycle
+
 ###Finding the Diameter of a Graph
