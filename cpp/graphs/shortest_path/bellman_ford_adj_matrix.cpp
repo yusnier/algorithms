@@ -48,6 +48,8 @@ bellman_ford_result bellman_ford(const adjacency_matrix &m, int src_vertex) {
     }
     // Run algorithm a second time to detect which nodes are part of a negative cycle.
     // A negative cycle has occurred if we can find a better path beyond the optimal solution.
+    // We just need one iteration instead of 'vertices - 1' to confirm whether or not there is
+    // a negative cycle, returning early if any relaxation occurred.
     for (auto _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
         some_edge_relaxed = false;
         for (auto i = 0; i < vertices; ++i) {
@@ -73,27 +75,32 @@ adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
     return result;
 }
 
-void display_shortest_paths(const bellman_ford_result &res) {
-    const int vertices = static_cast<int>(res.dist.size());
-    for (auto i = 0; i < vertices; ++i) {
-        std::cout << "From " << res.src_vertex << " to " << i << ": [" << std::setw(4) << res.dist[i] << "] ";
-        if (res.dist[i] == POSITIVE_INFINITY) {
-            std::cout << "[unreachable]";
-        } else if (res.dist[i] == NEGATIVE_INFINITY) {
-            std::cout << "[negative cycle]";
-        } else {
-            std::vector<int> path(1, i);
-            for (auto j = res.prev[i]; j != -1; j = res.prev[j]) {
-                path.push_back(j);
-            }
-            std::reverse(path.begin(), path.end());
-            std::cout << "[" << path[0];
-            for (auto j = 1; j < path.size(); ++j) {
-                std::cout << " -> " << path[j] << "";
-            }
-            std::cout << "]";
+void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
+    std::cout << "From " << result.src_vertex << " to " << dest_vertex << ": ["
+              << std::setw(4) << result.dist[dest_vertex] << "] ";
+    if (result.dist[dest_vertex] == POSITIVE_INFINITY) {
+        std::cout << "[unreachable]";
+    } else if (result.dist[dest_vertex] == NEGATIVE_INFINITY) {
+        std::cout << "[negative cycle]";
+    } else {
+        std::vector<int> path;
+        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
+            path.push_back(at);
         }
-        std::cout << std::endl;
+        std::reverse(path.begin(), path.end());
+        std::cout << "[" << path[0];
+        for (auto i = 1; i < path.size(); ++i) {
+            std::cout << " -> " << path[i] << "";
+        }
+        std::cout << "]";
+    }
+    std::cout << std::endl;
+}
+
+void display_all_shortest_paths(const bellman_ford_result &result) {
+    const int vertices = static_cast<int>(result.dist.size());
+    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+        display_shortest_path(result, dest_vertex);
     }
 }
 
@@ -113,7 +120,7 @@ int main() {
         m[3][5] = 6;
         m[4][5] = 1;
         const bellman_ford_result result = bellman_ford(m, 0);
-        display_shortest_paths(result);
+        display_all_shortest_paths(result);
     }
     std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
     {
@@ -128,7 +135,7 @@ int main() {
         m[4][5] = 2;
         m[6][4] = 2;
         const bellman_ford_result result = bellman_ford(m, 0);
-        display_shortest_paths(result);
+        display_all_shortest_paths(result);
     }
     std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
     {
@@ -147,7 +154,7 @@ int main() {
         m[6][7] = -50;
         m[7][8] = -10;
         const bellman_ford_result result = bellman_ford(m, 0);
-        display_shortest_paths(result);
+        display_all_shortest_paths(result);
     }
     std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
     {
@@ -163,7 +170,31 @@ int main() {
         m[6][7] = 4;
         m[5][7] = 3;
         const bellman_ford_result result = bellman_ford(m, 0);
-        display_shortest_paths(result);
+        display_all_shortest_paths(result);
+    }
+    std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        m[0][1] = 1;
+        m[1][2] = 8;
+        m[1][3] = 4;
+        m[1][4] = 1;
+        m[2][5] = 2;
+        m[3][5] = 2;
+        m[4][3] = 2;
+        m[4][4] = 3;
+        m[4][6] = 6;
+        m[5][2] = 1;
+        m[5][6] = 1;
+        m[5][7] = 2;
+        m[6][9] = 1;
+        m[7][8] = 1;
+        m[7][10] = 1;
+        m[8][6] = 3;
+        m[9][8] = -6;
+        m[10][10] = -1;
+        const bellman_ford_result result = bellman_ford(m, 1);
+        display_all_shortest_paths(result);
     }
     return 0;
 }
