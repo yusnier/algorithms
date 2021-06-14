@@ -88,14 +88,14 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
     return dijkstra_result{src_vertex, dist, prev};
 }
 
-void display_shortest_path(const dijkstra_result &res, int dest_vertex) {
-    std::cout << "From " << res.src_vertex << " to " << dest_vertex << ": ["
-              << std::setw(4) << res.dist[dest_vertex] << "] ";
-    if (res.dist[dest_vertex] == POSITIVE_INFINITY) {
+void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
+    std::cout << "From " << result.src_vertex << " to " << dest_vertex << ": ["
+              << std::setw(4) << result.dist[dest_vertex] << "] ";
+    if (result.dist[dest_vertex] == POSITIVE_INFINITY) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = res.prev[at]) {
+        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
@@ -108,10 +108,10 @@ void display_shortest_path(const dijkstra_result &res, int dest_vertex) {
     std::cout << std::endl;
 }
 
-void display_all_shortest_paths(const dijkstra_result &res) {
-    const int vertices = static_cast<int>(res.dist.size());
+void display_all_shortest_paths(const dijkstra_result &result) {
+    const int vertices = static_cast<int>(result.dist.size());
     for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
-        display_shortest_path(res, dest_vertex);
+        display_shortest_path(result, dest_vertex);
     }
 }
 
@@ -131,6 +131,29 @@ int main() {
         g.add_edge(3, {3, 5, 6});
         g.add_edge(4, {4, 5, 1});
         const dijkstra_result result = dijkstra(g, 0);
+        display_all_shortest_paths(result);
+    }
+    std::cout << "Example 2" << std::endl;  // resources/digraph_weighted_no_neg_cycles.svg
+    {
+        graph g(12);
+        g.add_edge(0, {0, 1, 1});
+        g.add_edge(1, {1, 2, 8});
+        g.add_edge(1, {1, 3, 4});
+        g.add_edge(1, {1, 4, 1});
+        g.add_edge(2, {2, 5, 2});
+        g.add_edge(3, {3, 5, 2});
+        g.add_edge(4, {4, 3, 2});
+        g.add_edge(4, {4, 4, 3});
+        g.add_edge(4, {4, 6, 6});
+        g.add_edge(5, {5, 2, 1});
+        g.add_edge(5, {5, 6, 1});
+        g.add_edge(5, {5, 7, 2});
+        g.add_edge(6, {6, 9, 1});
+        g.add_edge(7, {7, 8, 1});
+        g.add_edge(7, {7, 10, 1});
+        g.add_edge(8, {8, 6, 3});
+        g.add_edge(9, {9, 8, 2});
+        const dijkstra_result result = dijkstra(g, 1);
         display_all_shortest_paths(result);
     }
     return 0;

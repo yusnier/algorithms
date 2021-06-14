@@ -84,14 +84,14 @@ adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
     return result;
 }
 
-void display_shortest_path(const dijkstra_result &res, int dest_vertex) {
-    std::cout << "From " << res.src_vertex << " to " << dest_vertex << ": ["
-              << std::setw(4) << res.dist[dest_vertex] << "] ";
-    if (res.dist[dest_vertex] == POSITIVE_INFINITY) {
+void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
+    std::cout << "From " << result.src_vertex << " to " << dest_vertex << ": ["
+              << std::setw(4) << result.dist[dest_vertex] << "] ";
+    if (result.dist[dest_vertex] == POSITIVE_INFINITY) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = res.prev[at]) {
+        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
@@ -104,10 +104,10 @@ void display_shortest_path(const dijkstra_result &res, int dest_vertex) {
     std::cout << std::endl;
 }
 
-void display_all_shortest_paths(const dijkstra_result &res) {
-    const int vertices = static_cast<int>(res.dist.size());
+void display_all_shortest_paths(const dijkstra_result &result) {
+    const int vertices = static_cast<int>(result.dist.size());
     for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
-        display_shortest_path(res, dest_vertex);
+        display_shortest_path(result, dest_vertex);
     }
 }
 
@@ -127,6 +127,29 @@ int main() {
         m[3][5] = 6;
         m[4][5] = 1;
         const dijkstra_result result = dijkstra(m, 0);
+        display_all_shortest_paths(result);
+    }
+    std::cout << "Example 2" << std::endl;  // resources/digraph_weighted_no_neg_cycles.svg
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        m[0][1] = 1;
+        m[1][2] = 8;
+        m[1][3] = 4;
+        m[1][4] = 1;
+        m[2][5] = 2;
+        m[3][5] = 2;
+        m[4][3] = 2;
+        m[4][4] = 3;
+        m[4][6] = 6;
+        m[5][2] = 1;
+        m[5][6] = 1;
+        m[5][7] = 2;
+        m[6][9] = 1;
+        m[7][8] = 1;
+        m[7][10] = 1;
+        m[8][6] = 3;
+        m[9][8] = 2;
+        const dijkstra_result result = dijkstra(m, 1);
         display_all_shortest_paths(result);
     }
     return 0;
