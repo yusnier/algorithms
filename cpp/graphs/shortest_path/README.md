@@ -21,11 +21,7 @@
 ### Single pair shortest path (SPSP)
 - **SPSP** algorithms are implemented by making modifications on the **SSSP** algorithms,
   generally stopping the search as soon as the destination vertex is reached.
-### Single destination shortest path (SDSP)
-- **SDSP** algorithms are implemented by making modifications on **SSSP** algorithms, generally
-  using the destination as the starting vertex, then we can build the paths by reversing the order.
-  For the particular case of directed graphs, we also need to reverse the edges before applying the
-  **SSSP** algorithm.
+
 
 ###Finding the (Cheapest/Negative) Cycle
 - test
