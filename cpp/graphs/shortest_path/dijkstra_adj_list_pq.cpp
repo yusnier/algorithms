@@ -32,7 +32,7 @@ public:
 struct dijkstra_result {
     const int src_vertex;
     const std::vector<double> dist;
-    const std::vector<int> prev;
+    const std::vector<int> parent;
 };
 
 dijkstra_result dijkstra(const graph &graph, int src_vertex) {
@@ -42,8 +42,8 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
     std::vector<double> dist(vertices, POSITIVE_INFINITY);
     dist[src_vertex] = 0;
     // This array will allows for shortest path reconstruction (if required) after the algorithm has terminated.
-    // prev[i] is the vertex where vertex i comes from in the shortest path.
-    std::vector<int> prev(vertices, -1);
+    // parent[i] is the vertex where vertex i comes from in the shortest path.
+    std::vector<int> parent(vertices, -1);
     // Boolean array to mark visited/unvisited for each node.
     std::vector<bool> visited(vertices, false);
     // Keep a priority queue of the next most promising vertex to visit, which is the unvisited one with the
@@ -73,7 +73,7 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
             if (dist[edge.from] + edge.cost < dist[edge.to]) {
                 dist[edge.to] = dist[edge.from] + edge.cost;
                 pq.push(pq_entry(dist[edge.to], edge.to));
-                prev[edge.to] = edge.from;
+                parent[edge.to] = edge.from;
             }
         }
         // If we are trying to solve 'Single Pair Shortest Path (SPSP)' we can add a new function parameter
@@ -87,7 +87,7 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
         // reachable from 'src_vertex'.
     }
 
-    return dijkstra_result{src_vertex, dist, prev};
+    return dijkstra_result{src_vertex, dist, parent};
 }
 
 void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
@@ -97,7 +97,7 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
+        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());

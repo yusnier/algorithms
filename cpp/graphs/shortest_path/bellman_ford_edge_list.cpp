@@ -21,7 +21,7 @@ struct edge {
 struct bellman_ford_result {
     const int src_vertex;
     const std::vector<double> dist;
-    const std::vector<int> prev;
+    const std::vector<int> parent;
 };
 
 bellman_ford_result bellman_ford(const std::vector<edge> &edges, int vertices, int src_vertex) {
@@ -29,9 +29,10 @@ bellman_ford_result bellman_ford(const std::vector<edge> &edges, int vertices, i
     // except for the start node which is zero.
     std::vector<double> dist(vertices, POSITIVE_INFINITY);
     dist[src_vertex] = 0;
-    // Initialize prev array which will allows for shortest path
+    // Initialize parent array which will allows for shortest path
     // reconstruction after the algorithm has terminated.
-    std::vector<int> prev(vertices, -1);
+    std::vector<int> parent(vertices, -1);
+
     // Only in the worst case does it take 'vertices'-1 iterations for the Bellman-Ford
     // algorithm to complete. Another stopping condition is when we're unable to relax
     // an edge, this means we have reached the optimal solution early.
@@ -42,7 +43,7 @@ bellman_ford_result bellman_ford(const std::vector<edge> &edges, int vertices, i
         for (const auto &edge: edges) {
             if (dist[edge.from] + edge.cost < dist[edge.to]) {
                 dist[edge.to] = dist[edge.from] + edge.cost;
-                prev[edge.to] = edge.from;
+                parent[edge.to] = edge.from;
                 some_edge_relaxed = true;
             }
         }
@@ -54,12 +55,13 @@ bellman_ford_result bellman_ford(const std::vector<edge> &edges, int vertices, i
         for (const auto &edge: edges) {
             if (dist[edge.from] + edge.cost < dist[edge.to]) {
                 dist[edge.to] = NEGATIVE_INFINITY;
-                prev[edge.to] = -1;
+                parent[edge.to] = -1;
                 some_edge_relaxed = true;
             }
         }
     }
-    return bellman_ford_result{src_vertex, dist, prev};
+
+    return bellman_ford_result{src_vertex, dist, parent};
 }
 
 void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
@@ -71,7 +73,7 @@ void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
         std::cout << "[negative cycle]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
+        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());

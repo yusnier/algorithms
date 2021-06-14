@@ -31,7 +31,7 @@ public:
 struct dijkstra_result {
     const int src_vertex;
     const std::vector<double> dist;
-    const std::vector<int> prev;
+    const std::vector<int> parent;
 };
 
 dijkstra_result dijkstra(const graph &graph, int src_vertex) {
@@ -41,8 +41,8 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
     std::vector<double> dist(vertices, POSITIVE_INFINITY);
     dist[src_vertex] = 0;
     // This array will allows for shortest path reconstruction (if required) after the algorithm has terminated.
-    // prev[i] is the vertex where vertex i comes from in the shortest path.
-    std::vector<int> prev(vertices, -1);
+    // parent[i] is the vertex where vertex i comes from in the shortest path.
+    std::vector<int> parent(vertices, -1);
     // Boolean array to mark visited/unvisited for each node.
     std::vector<bool> visited(vertices, false);
     // The first vertex to start with the shortest distance is 'src_vertex'.
@@ -59,7 +59,7 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
             if (visited[edge.to]) { continue; }
             if (dist[edge.from] + edge.cost < dist[edge.to]) {
                 dist[edge.to] = dist[edge.from] + edge.cost;
-                prev[edge.to] = edge.from;
+                parent[edge.to] = edge.from;
             }
         }
 
@@ -85,7 +85,7 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
         }
     }
 
-    return dijkstra_result{src_vertex, dist, prev};
+    return dijkstra_result{src_vertex, dist, parent};
 }
 
 void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
@@ -95,7 +95,7 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.prev[at]) {
+        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
