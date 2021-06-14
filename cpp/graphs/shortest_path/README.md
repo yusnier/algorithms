@@ -19,12 +19,12 @@
   - Floyd-Warshall
     - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/floyd_warshall_adj_matrix.cpp) **O(V<sup>3</sup>)**
 ### Single pair shortest path (SPSP)
-- > **SPSP** algorithms are implemented by making modifications on the **SSSP** algorithms,
-  > generally stopping the search as soon as the destination vertex is reached.
+- **SPSP** algorithms are implemented by making modifications on the **SSSP** algorithms,
+  generally stopping the search as soon as the destination vertex is reached.
 ### Single destination shortest path (SDSP)
-- > **SDSP** algorithms are implemented by making modifications on **SSSP** algorithms, generally
-  > using the destination as the starting vertex, then we can build the paths by reversing the order.
-  > For the particular case of directed graphs, we also need to reverse the edges before applying the
-  > **SSSP** algorithm.
+- **SDSP** algorithms are implemented by making modifications on **SSSP** algorithms, generally
+  using the destination as the starting vertex, then we can build the paths by reversing the order.
+  For the particular case of directed graphs, we also need to reverse the edges before applying the
+  **SSSP** algorithm.
 ###Finding the (Cheapest/Negative) Cycle
 ###Finding the Diameter of a Graph
