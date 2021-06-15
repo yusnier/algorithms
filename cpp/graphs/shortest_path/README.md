@@ -16,7 +16,7 @@
     - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_matrix.cpp) **O(V<sup>3</sup>)**
     - [Edge list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_edge_list.cpp) **O(VE)**
 ### All pairs shortest path (APSP)
-- **APSP** on Graph with Negative Weight Cycle
+- APSP on Graph with Negative Weight Cycle
   - **Floyd-Warshall**
     - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/floyd_warshall_adj_matrix.cpp) **O(V<sup>3</sup>)**
     - Finding the **(Cheapest/Negative) Cycle**
