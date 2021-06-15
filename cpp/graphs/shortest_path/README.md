@@ -46,14 +46,20 @@ stopping the search as soon as the destination vertex is reached.
 destination as the starting vertex, then we can build the paths by reversing the order. For the particular
 case of directed graphs, we also need to reverse the edges before applying the **SSSP** algorithm.
 ### SSSP/APSP Algorithm Decision Table
+Presenting an **SSSP/APSP** algorithm decision table within the context of programming
+contest, to help the readers in deciding which algorithm to choose depending on
+various graph criteria. The terminologies used are as follows: ‘Best’ → the most suitable
+algorithm; ‘Ok’ → a correct algorithm but not the best; ‘Bad’ → a (very) slow algorithm;
+‘WA’ → an incorrect algorithm; and ‘Overkill’ → a correct algorithm but unnecessary.
 
-| Graph<br/>Criteria | BFS<br/>O(V+E) | Dijkstra’s<br/>O((V+E)logV ) | Bellman Ford’s<br/>O(VE) | Floyd Warshall’s<br/>O(V<sup>3</sup>) |
-|-----------------|----------------|------------------|----------------|------------------|
-| Max Size        | V, E ≤ 10M     | V, E ≤ 300K      | V E ≤ 10M      | V ≤ 400          |
-| Unweighted      | Best           | Ok               | Bad            | Bad in general   |
-| Weighted        | WA             | Best             | Ok             | Bad in general   |
-| Negative weight | WA             | Our variant Ok   | Ok             | Bad in general   |
-| Negative cycle  | Cannot detect  | Cannot detect    | Can detect     | Can detect       |
-| Small graph     | WA if weighted | Overkill         | Overkill       | Best             |
+| Graph Criteria  | BFS            | Dijkstra          | Bellman-Ford   | Floyd-Warshall       |
+|-----------------|----------------|-------------------|----------------|----------------------|
+| Complexity      | **O(V+E)**     | **O((V+E)logV )** | **O(VE)**      | **O(V<sup>3</sup>)** |
+| Max Size        | V, E ≤ 10M     | V, E ≤ 300K       | V E ≤ 10M      | V ≤ 400              |
+| Unweighted      | Best           | Ok                | Bad            | Bad in general       |
+| Weighted        | WA             | Best              | Ok             | Bad in general       |
+| Negative weight | WA             | Our variant Ok    | Ok             | Bad in general       |
+| Negative cycle  | Cannot detect  | Cannot detect     | Can detect     | Can detect           |
+| Small graph     | WA if weighted | Overkill          | Overkill       | Best                 |
 
 
