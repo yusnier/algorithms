@@ -77,14 +77,11 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
             }
         }
         // If we are trying to solve 'Single Pair Shortest Path (SPSP)' we can add a new function parameter
-        // 'dest_vertex' and if the reconstruction of the shortest path is required we uncomment this block:
-        //if (vertex == dest_vertex) {
-        //    break;
-        //}
-        // But, if the reconstruction is not required, we can modify the function to return only the shortest
-        // distance at this point: 'return dist[dest_vertex]', also putting a 'return POSITIVE_INFINITY' at the
-        // end of the function instead of returning a 'dijkstra_result', which means that 'dest_vertex' is not
-        // reachable from 'src_vertex'.
+        // 'dest_vertex' and stop early at this point once we meet the condition: 'vertex == dest_vertex'.
+        // If we want to return a 'bfs_result' for path reconstruction we can just break the loop.
+        // But if we want just to return the shortest distance we can make a 'return dist[dest_vertex]' at
+        // at this point, also putting a 'return POSITIVE_INFINITY' at the end of the function, instead of
+        // returning a 'dijkstra_result', which means that 'dest_vertex' is not reachable from 'src_vertex'.
     }
 
     return dijkstra_result{src_vertex, dist, parent};

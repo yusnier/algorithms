@@ -49,8 +49,10 @@ bellman_ford_result bellman_ford(const adjacency_matrix &m, int src_vertex) {
     }
     // Run algorithm a second time to detect which nodes are part of a negative cycle.
     // A negative cycle has occurred if we can find a better path beyond the optimal solution.
-    // We just need one iteration instead of 'vertices - 1' to confirm whether or not there is
-    // a negative cycle, returning early if any relaxation occurred.
+    // We need the same 'vertices - 1' iterations to propagate the value 'NEGATIVE_INFINITY'
+    // to every edge that is part of or reaches into a negative cycle. But if the requirement
+    // is only to know if there is a negative cycle or not, one iteration is enough, returning
+    // early if any relaxation occurred.
     for (auto _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
         some_edge_relaxed = false;
         for (auto i = 0; i < vertices; ++i) {

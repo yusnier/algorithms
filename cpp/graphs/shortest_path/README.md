@@ -1,8 +1,9 @@
 # Graphs algorithms
 ### Single source shortest path (SSSP)
 - **SSSP on Unweighted Graph**
-  - DFS
-  - BFS
+  - Breadth First Search (BFS)
+    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bfs_adj_list.cpp) **O(EV)**
+    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bfs_adj_matrix.cpp) **O(EV)**
 - **SSSP on Weighted Graph**
   - Dijkstra
     - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_list.cpp) **O(EV)**
