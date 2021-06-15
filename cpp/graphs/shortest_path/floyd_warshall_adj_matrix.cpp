@@ -42,9 +42,6 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
                 parent[i][j] = i;
             }
         }
-//        if (m[i][i] == 0) {
-//            dp[i][i] = POSITIVE_INFINITY;
-//        }
     }
     // Compute all pairs shortest paths.
     for (int k = 0; k < vertices; ++k) {
@@ -57,29 +54,10 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
             }
         }
     }
-
-
-    std::cout << "  | ";
-    for (int j = 0; j < vertices; ++j) {
-        std::cout << std::setw(4) << j << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "----";
-    for (int j = 0; j < vertices; ++j) {
-        std::cout << "-----";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < vertices; ++i) {
-        std::cout << std::setw(2) << i << "| ";
-        for (int j = 0; j < vertices; ++j) {
-            std::cout << std::setw(4) << dp[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-
-
-    // Identify negative cycles by propagating the value 'NEGATIVE_INFINITY'
-    // to every edge that is part of or reaches into a negative cycle.
+    // Identify negative cycles by propagating the value 'NEGATIVE_INFINITY' to every edge that
+    // is part of or reaches into a negative cycle. We do this in O(V^3), but if the requirement
+    // is only to know if there is a negative cycle or not, we just need to search for a negative
+    // value on the main diagonal of the adjacency matrix in O(V).
     for (int k = 0; k < vertices; ++k) {
         for (int i = 0; i < vertices; ++i) {
             for (int j = 0; j < vertices; ++j) {
@@ -90,23 +68,7 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
             }
         }
     }
-    std::cout << "  | ";
-    for (int j = 0; j < vertices; ++j) {
-        std::cout << std::setw(4) << j << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "----";
-    for (int j = 0; j < vertices; ++j) {
-        std::cout << "-----";
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < vertices; ++i) {
-        std::cout << std::setw(2) << i << "| ";
-        for (int j = 0; j < vertices; ++j) {
-            std::cout << std::setw(4) << dp[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
+
     return floyd_warshall_result{dp, parent};
 }
 
@@ -152,73 +114,73 @@ adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
 }
 
 int main() {
-//    std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
-//    {
-//        adjacency_matrix m = setup_disconnected_adjacency_matrix(6);
-//        m[0][1] = 5;
-//        m[0][2] = 1;
-//        m[1][2] = 2;
-//        m[1][3] = 3;
-//        m[1][4] = 20;
-//        m[2][1] = 3;
-//        m[2][4] = 12;
-//        m[3][2] = 3;
-//        m[3][4] = 2;
-//        m[3][5] = 6;
-//        m[4][5] = 1;
-//        const floyd_warshall_result result = floyd_warshall(m);
-//        display_all_shortest_paths(result, 0);
-//    }
-//    std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
-//    {
-//        adjacency_matrix m = setup_disconnected_adjacency_matrix(7);
-//        m[0][1] = 4;
-//        m[0][6] = 2;
-//        m[1][1] = -1;
-//        m[1][2] = 3;
-//        m[2][3] = 3;
-//        m[2][4] = 1;
-//        m[3][5] = -2;
-//        m[4][5] = 2;
-//        m[6][4] = 2;
-//        const floyd_warshall_result result = floyd_warshall(m);
-//        display_all_shortest_paths(result, 0);
-//    }
-//    std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
-//    {
-//        adjacency_matrix m = setup_disconnected_adjacency_matrix(10);
-//        m[0][1] = 5;
-//        m[1][2] = 20;
-//        m[1][5] = 30;
-//        m[1][6] = 60;
-//        m[2][3] = 10;
-//        m[2][4] = 75;
-//        m[3][2] = -15;
-//        m[4][9] = 100;
-//        m[5][4] = 25;
-//        m[5][6] = 5;
-//        m[5][8] = 50;
-//        m[6][7] = -50;
-//        m[7][8] = -10;
-//        const floyd_warshall_result result = floyd_warshall(m);
-//        display_all_shortest_paths(result, 0);
-//    }
-//    std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
-//    {
-//        adjacency_matrix m = setup_disconnected_adjacency_matrix(9);
-//        m[0][1] = 1;
-//        m[1][2] = 1;
-//        m[2][4] = 1;
-//        m[4][3] = -3;
-//        m[3][2] = 1;
-//        m[1][5] = 4;
-//        m[1][6] = 4;
-//        m[5][6] = 5;
-//        m[6][7] = 4;
-//        m[5][7] = 3;
-//        const floyd_warshall_result result = floyd_warshall(m);
-//        display_all_shortest_paths(result, 0);
-//    }
+    std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(6);
+        m[0][1] = 5;
+        m[0][2] = 1;
+        m[1][2] = 2;
+        m[1][3] = 3;
+        m[1][4] = 20;
+        m[2][1] = 3;
+        m[2][4] = 12;
+        m[3][2] = 3;
+        m[3][4] = 2;
+        m[3][5] = 6;
+        m[4][5] = 1;
+        const floyd_warshall_result result = floyd_warshall(m);
+        display_all_shortest_paths(result, 0);
+    }
+    std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(7);
+        m[0][1] = 4;
+        m[0][6] = 2;
+        m[1][1] = -1;
+        m[1][2] = 3;
+        m[2][3] = 3;
+        m[2][4] = 1;
+        m[3][5] = -2;
+        m[4][5] = 2;
+        m[6][4] = 2;
+        const floyd_warshall_result result = floyd_warshall(m);
+        display_all_shortest_paths(result, 0);
+    }
+    std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(10);
+        m[0][1] = 5;
+        m[1][2] = 20;
+        m[1][5] = 30;
+        m[1][6] = 60;
+        m[2][3] = 10;
+        m[2][4] = 75;
+        m[3][2] = -15;
+        m[4][9] = 100;
+        m[5][4] = 25;
+        m[5][6] = 5;
+        m[5][8] = 50;
+        m[6][7] = -50;
+        m[7][8] = -10;
+        const floyd_warshall_result result = floyd_warshall(m);
+        display_all_shortest_paths(result, 0);
+    }
+    std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
+    {
+        adjacency_matrix m = setup_disconnected_adjacency_matrix(9);
+        m[0][1] = 1;
+        m[1][2] = 1;
+        m[2][4] = 1;
+        m[4][3] = -3;
+        m[3][2] = 1;
+        m[1][5] = 4;
+        m[1][6] = 4;
+        m[5][6] = 5;
+        m[6][7] = 4;
+        m[5][7] = 3;
+        const floyd_warshall_result result = floyd_warshall(m);
+        display_all_shortest_paths(result, 0);
+    }
     std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
     {
         adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
@@ -243,12 +205,5 @@ int main() {
         const floyd_warshall_result result = floyd_warshall(m);
         display_all_shortest_paths(result, 1);
     }
-//    std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
-//    {
-//        adjacency_matrix m = setup_disconnected_adjacency_matrix(2);
-//        m[0][1] = 1;
-//        const floyd_warshall_result result = floyd_warshall(m);
-//        display_all_shortest_paths(result, 0);
-//    }
-//    return 0;
+    return 0;
 }
