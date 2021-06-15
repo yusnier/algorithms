@@ -12,9 +12,9 @@
     - [Adjacency matrix using Priority Queue](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_matrix_pq.cpp) **O(Elog(V))**
 - SSSP on Graph with Negative Weight Cycle
   - **Bellman-Ford**
-    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_list.cpp) **O(VE</sup>)**
+    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_list.cpp) **O(VE)**
     - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_matrix.cpp) **O(V<sup>3</sup>)**
-    - [Edge list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_edge_list.cpp) **O(VE</sup>)**
+    - [Edge list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_edge_list.cpp) **O(VE)**
 ### All pairs shortest path (APSP)
 - **APSP** on Graph with Negative Weight Cycle
   - **Floyd-Warshall**
@@ -45,4 +45,15 @@ stopping the search as soon as the destination vertex is reached.
 > **SDSP** algorithms are implemented by making modifications on **SSSP** algorithms, generally using the
 destination as the starting vertex, then we can build the paths by reversing the order. For the particular
 case of directed graphs, we also need to reverse the edges before applying the **SSSP** algorithm.
-### Finding the Diameter of a Graph
+### SSSP/APSP Algorithm Decision Table
+
+| Graph<br/>Criteria | BFS<br/>O(V+E) | Dijkstra’s<br/>O((V+E)logV ) | Bellman Ford’s<br/>O(VE) | Floyd Warshall’s<br/>O(V<sup>3</sup>) |
+|-----------------|----------------|------------------|----------------|------------------|
+| Max Size        | V, E ≤ 10M     | V, E ≤ 300K      | V E ≤ 10M      | V ≤ 400          |
+| Unweighted      | Best           | Ok               | Bad            | Bad in general   |
+| Weighted        | WA             | Best             | Ok             | Bad in general   |
+| Negative weight | WA             | Our variant Ok   | Ok             | Bad in general   |
+| Negative cycle  | Cannot detect  | Cannot detect    | Can detect     | Can detect       |
+| Small graph     | WA if weighted | Overkill         | Overkill       | Best             |
+
+
