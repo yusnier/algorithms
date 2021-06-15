@@ -62,6 +62,6 @@ algorithm; **Ok** → a correct algorithm but not the best; **Bad** → a (very)
 | Negative cycle  | Cannot detect  | Cannot detect     | Can detect     | Can detect           |
 | Small graph     | WA if weighted | Overkill          | Overkill       | Best                 |
 
-<sub><sup>Reference: Competitive Programming 3, P. 161, Steven & Felix Halim</sup></sub>
+<sub>Reference: Competitive Programming 3, P. 161, Steven & Felix Halim</sub>
 
 
