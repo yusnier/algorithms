@@ -93,6 +93,8 @@ kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
     double min_cost = 0;
     std::vector<edge> mst;
 
+    // If what we want is to determine the 'Maximum' Spanning Tree instead of the 'Minimum',
+    // we only need to reverse the sort order to descending (e.g. 'return a.cost > b.cost').
     std::vector<edge> sorted_edges = edges;
     std::sort(sorted_edges.begin(), sorted_edges.end(), [](const edge &a, const edge &b) -> bool {
         return a.cost < b.cost;
