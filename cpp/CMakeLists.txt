@@ -3,13 +3,21 @@ project(algorithms)
 
 set(CMAKE_CXX_STANDARD 14)
 
+
+add_executable(connected_cells_in_a_grid bfs/connected_cells_in_a_grid.cpp)
+
 add_executable(next_permutation combinatorics/permutations/next_permutation.cpp)
 add_executable(prev_permutation combinatorics/permutations/prev_permutation.cpp)
 add_executable(heap_generator combinatorics/permutations/heap_generator.cpp)
 
+add_executable(kruskal_edge_list graphs/minimum_spanning_tree/kruskal_edge_list.cpp)
+
 add_executable(bellman_ford_adj_list graphs/shortest_path/bellman_ford_adj_list.cpp)
 add_executable(bellman_ford_adj_matrix graphs/shortest_path/bellman_ford_adj_matrix.cpp)
 add_executable(bellman_ford_edge_list graphs/shortest_path/bellman_ford_edge_list.cpp)
+
+add_executable(bfs_adj_list graphs/shortest_path/bfs_adj_list.cpp)
+add_executable(bfs_adj_matrix graphs/shortest_path/bfs_adj_matrix.cpp)
 
 add_executable(dijkstra_adj_list graphs/shortest_path/dijkstra_adj_list.cpp)
 add_executable(dijkstra_adj_list_pq graphs/shortest_path/dijkstra_adj_list_pq.cpp)
@@ -17,6 +25,3 @@ add_executable(dijkstra_adj_matrix graphs/shortest_path/dijkstra_adj_matrix.cpp)
 add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_pq.cpp)
 
 add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
-
-add_executable(test test.cpp)
-add_executable(test2 test2.cpp)
