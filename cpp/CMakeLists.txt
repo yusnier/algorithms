@@ -6,6 +6,14 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(connected_cells_in_a_grid bfs/connected_cells_in_a_grid.cpp)
 
+add_executable(1_can_sum dynamic_programming/coins/tabulation/1_can_sum.cpp)
+add_executable(2_how_sum dynamic_programming/coins/tabulation/2_how_sum.cpp)
+add_executable(3_best_sum dynamic_programming/coins/tabulation/3_best_sum.cpp)
+add_executable(4_how_many_sums_rep dynamic_programming/coins/tabulation/4_how_many_sums_rep.cpp)
+add_executable(5_all_sums_rep dynamic_programming/coins/tabulation/5_all_sums_rep.cpp)
+add_executable(6_all_sums_no_rep dynamic_programming/coins/tabulation/6_all_sums_no_rep.cpp)
+add_executable(7_all_sums_no_rep_dfs dynamic_programming/coins/tabulation/7_all_sums_no_rep_dfs.cpp)
+
 add_executable(next_permutation combinatorics/permutations/next_permutation.cpp)
 add_executable(prev_permutation combinatorics/permutations/prev_permutation.cpp)
 add_executable(heap_generator combinatorics/permutations/heap_generator.cpp)
