@@ -44,7 +44,7 @@ public:
         // Compress the path leading back to the root.
         // Doing this operation is called "path compression" and is what give us amortized constant time complexity.
         while (p != root) {
-            int next = id[p];
+            const int next = id[p];
             id[p] = root;
             p = next;
         }
@@ -60,8 +60,8 @@ public:
     }
     // Unify the components/sets containing elements 'p' and 'q'.
     void union_set(int p, int q) {
-        int root1 = find(p);
-        int root2 = find(q);
+        const int root1 = find(p);
+        const int root2 = find(q);
         // These elements are in the same group!
         if (root1 == root2) { return; }
         // Merge two components/sets together. Merge smaller component/set into the larger one.
