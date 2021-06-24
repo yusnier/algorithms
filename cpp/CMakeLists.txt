@@ -14,6 +14,9 @@ add_executable(5_all_sums_rep dynamic_programming/coins/tabulation/5_all_sums_re
 add_executable(6_all_sums_no_rep dynamic_programming/coins/tabulation/6_all_sums_no_rep.cpp)
 add_executable(7_all_sums_no_rep_dfs dynamic_programming/coins/tabulation/7_all_sums_no_rep_dfs.cpp)
 
+add_executable(max_1d_range_sum dynamic_programming/max_range_sum/max_1d_range_sum.cpp)
+add_executable(max_2d_range_sum dynamic_programming/max_range_sum/max_2d_range_sum.cpp)
+
 add_executable(next_permutation combinatorics/permutations/next_permutation.cpp)
 add_executable(prev_permutation combinatorics/permutations/prev_permutation.cpp)
 add_executable(heap_generator combinatorics/permutations/heap_generator.cpp)
@@ -33,3 +36,5 @@ add_executable(dijkstra_adj_matrix graphs/shortest_path/dijkstra_adj_matrix.cpp)
 add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_pq.cpp)
 
 add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
+
+add_executable(test test.cpp)
