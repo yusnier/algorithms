@@ -9,11 +9,11 @@ typedef std::vector<std::vector<int>> matrix;
 // principle. With the sum matrix, we can answer the sum of any sub-matrix (i, j) to (k, l) in O(1).
 // In terms of performance, we could take advantage, doing this transformation (if required), while
 // reading the matrix from the input in O(n^2).
-//  *  *  *  .  _
-//  *  *  *  .  _
-//  *  *  *  .  _
-//  .  .  .  X  _
-//  _  _  _  _  _
+//  +  +  +  -  .
+//  *  *  +  -  .
+//  +  +  +  -  .
+//  |  |  |  X  .
+//  .  .  .  .  .
 void transform_to_sum_matrix(matrix &m) {
     assert(!m.empty());
     for (int i = 0; i < m.size(); ++i) {
