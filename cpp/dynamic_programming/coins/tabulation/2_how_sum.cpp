@@ -27,15 +27,15 @@ std::vector<int> how_sum(int target_sum, const std::vector<int> &values) {
     }
 
     // Construction of the values combination that add up to 'target_sum'.
-    std::vector<int> path;
+    std::vector<int> combination;
     if (parent[target_sum] != NULL_VALUE) {
         for (int at = target_sum; at != 0; at=parent[at]) {
-            path.push_back(at - parent[at]);
+            combination.push_back(at - parent[at]);
         }
-        std::reverse(path.begin(), path.end());  // just in case we want the original order
+        std::reverse(combination.begin(), combination.end());  // just in case we want the original order
     }
 
-    return path;
+    return combination;
 }
 
 void display_sum_combination(const std::vector<int> &coins_list) {

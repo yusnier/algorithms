@@ -2,7 +2,8 @@
 #include <iostream>
 #include <vector>
 
-// Rearranges the elements into the next lexicographically greater permutation.
+// Rearranges the elements of 'vec' into the next lexicographically greater permutation
+// using Narayana Panditha’s algorithm.
 bool next_permutation(std::vector<int> &vec) {
     // Find the largest index i such that vec[i] < vec[i + 1].
     int i = static_cast<int>(vec.size()) - 2;
@@ -35,7 +36,7 @@ void print_vector(int permutation_order, const std::vector<int> &vec) {
 }
 
 int main() {
-    std::vector<int> vec{1, 2, 3};
+    std::vector<int> vec = {1, 2, 3};
 
     int permutation_order = 1;
     do {

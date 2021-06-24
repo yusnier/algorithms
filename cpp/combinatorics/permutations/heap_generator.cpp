@@ -9,7 +9,7 @@ void print_vector(uint32_t permutation_order, const std::vector<int> &vec) {
     std::cout << std::endl;
 }
 
-// Generates all possible permutations of vec elements.
+// Generates all possible permutations of 'vec' elements, using Heap's algorithm.
 void generate(std::vector<int> &vec) {
     std::vector<int> indexes(vec.size(), 0);
 
@@ -41,7 +41,7 @@ void generate(std::vector<int> &vec) {
 }
 
 int main() {
-    std::vector<int> vec{1, 2, 3};
+    std::vector<int> vec = {1, 2, 3};
 
     generate(vec);
 

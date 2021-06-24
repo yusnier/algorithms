@@ -3,18 +3,14 @@
 #include <queue>
 #include <vector>
 
-template<class T>
-struct matrix {
-    typedef std::vector<std::vector<T>> type;
-};
-typedef matrix<int>::type grid_type;
-typedef matrix<bool>::type visited_type;
+typedef std::vector<std::vector<int>> grid_type;
+typedef std::vector<std::vector<bool>> visited_type;
 
 struct cell {
     int row, col;
 };
 
-int scan_new_region(int start_row, int start_col, const grid_type &grid, visited_type &visited) {
+int scan_new_region(const cell &start, const grid_type &grid, visited_type &visited) {
     constexpr int row_dir[] = {-1, -1,  0,  1,  1,  1,  0, -1};  // 8  1  2
     constexpr int col_dir[] = { 0,  1,  1,  1,  0, -1, -1, -1};  // 7  X  3
                                                                  // 6  5  4
@@ -22,8 +18,8 @@ int scan_new_region(int start_row, int start_col, const grid_type &grid, visited
     const int cols = static_cast<int>(grid[0].size());
 
     std::queue<cell> q;
-    q.push({start_row, start_col});
-    visited[start_row][start_col] = true;
+    q.push({start.row, start.col});
+    visited[start.row][start.col] = true;
     int count = 0;
 
     // Scanning the new region using a BFS (queue) approach.
@@ -49,13 +45,13 @@ int max_region(const grid_type &grid) {
     const int rows = static_cast<int>(grid.size());
     const int cols = static_cast<int>(grid[0].size());
 
-    matrix<bool>::type visited(rows, std::vector<bool>(cols, false));
+    visited_type visited(rows, std::vector<bool>(cols, false));
     int max_region_size = 0;
 
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
             if (grid[row][col] == 1 && !visited[row][col]) {
-                int region_size = scan_new_region(row, col, grid, visited);
+                int region_size = scan_new_region({row, col}, grid, visited);
                 max_region_size = std::max(max_region_size, region_size);
             }
         }

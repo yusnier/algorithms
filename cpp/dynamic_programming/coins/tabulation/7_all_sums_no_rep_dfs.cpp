@@ -28,7 +28,7 @@ combinations_type all_sums_no_rep_dfs(int target_sum, const combination_type &va
         }
         // If there is no remainder, we have a new combination.
         if (sum == 0) {
-            //********** In this block we process the current combination. **********
+            //---------- In this block we process the current combination. ----------
             combination_type new_combination;
             for (int j = 0; j < values.size(); ++j) {
                 if (counters[j] != 0) {
@@ -36,7 +36,7 @@ combinations_type all_sums_no_rep_dfs(int target_sum, const combination_type &va
                 }
             }
             result.push_back(new_combination);
-            //***********************************************************************
+            //-----------------------------------------------------------------------
         }
         // Reset the last counter, since we can't get a new combination by decreasing it.
         sum += counters[i - 1] * values[i - 1];
