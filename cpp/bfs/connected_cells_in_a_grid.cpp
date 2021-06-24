@@ -15,13 +15,14 @@ struct cell {
 };
 
 int scan_new_region(int start_row, int start_col, const grid_type &grid, visited_type &visited) {
-    constexpr int row_dir[] = {-1, -1, 0, 1, 1, 1, 0, -1};
-    constexpr int col_dir[] = {0, 1, 1, 1, 0, -1, -1, -1};
+    constexpr int row_dir[] = {-1, -1,  0,  1,  1,  1,  0, -1};  // 8  1  2
+    constexpr int col_dir[] = { 0,  1,  1,  1,  0, -1, -1, -1};  // 7  X  3
+                                                                 // 6  5  4
     const int rows = static_cast<int>(grid.size());
     const int cols = static_cast<int>(grid[0].size());
 
     std::queue<cell> q;
-    q.push(cell{start_row, start_col});
+    q.push({start_row, start_col});
     visited[start_row][start_col] = true;
     int count = 0;
 
@@ -31,7 +32,7 @@ int scan_new_region(int start_row, int start_col, const grid_type &grid, visited
         const cell current = q.front(); q.pop();
         ++count;
         for (int i = 0; i < 8; ++i) {
-            const cell neighbor = cell{current.row + row_dir[i], current.col + col_dir[i]};
+            const cell neighbor = {current.row + row_dir[i], current.col + col_dir[i]};
             if (neighbor.row >= 0 && neighbor.row < rows && neighbor.col >= 0 && neighbor.col < cols &&
                 grid[neighbor.row][neighbor.col] == 1 && !visited[neighbor.row][neighbor.col]) {
                 visited[neighbor.row][neighbor.col] = true;
