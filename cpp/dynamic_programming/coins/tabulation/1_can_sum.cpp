@@ -19,9 +19,9 @@ bool can_sum(int target_sum, const std::vector<int> &values) {
 }
 
 int main() {
-    std::cout << std::boolalpha << can_sum(7, std::vector<int>{2, 3}) << std::endl;       // true
-    std::cout << std::boolalpha << can_sum(7, std::vector<int>{5, 3, 4, 7}) << std::endl; // true
-    std::cout << std::boolalpha << can_sum(7, std::vector<int>{2, 4}) << std::endl;       // false
-    std::cout << std::boolalpha << can_sum(8, std::vector<int>{2, 3, 5}) << std::endl;    // true
-    std::cout << std::boolalpha << can_sum(300, std::vector<int>{7, 14}) << std::endl;    // false
+    std::cout << std::boolalpha << can_sum(7, {2, 3}) << std::endl;       // true
+    std::cout << std::boolalpha << can_sum(7, {5, 3, 4, 7}) << std::endl; // true
+    std::cout << std::boolalpha << can_sum(7, {2, 4}) << std::endl;       // false
+    std::cout << std::boolalpha << can_sum(8, {2, 3, 5}) << std::endl;    // true
+    std::cout << std::boolalpha << can_sum(300, {7, 14}) << std::endl;    // false
 }

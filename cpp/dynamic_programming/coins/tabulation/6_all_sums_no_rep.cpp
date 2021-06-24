@@ -14,8 +14,9 @@ typedef  std::set<combination_type> combinations_type;
 // e.g. combinations like [1, 1, 4], [1, 4, 1] and [4, 1, 1] will be merged as the unique combination [1, 1, 4].
 // It uses an DP approach (with tabulation), where the combinations have always the same order.
 combinations_type all_sums_no_rep(int target_sum, const std::vector<int> &values) {
-    // 'all_combinations[i]' is a list with all possible combinations of values that add up to 'i'.
-    // If it is empty it means that there is no possible combination of values that add up to 'i'.
+    // 'all_combinations[i]' is a list with all possible combinations of values (without repetition)
+    // that add up to 'i'. If it is empty it means that there is no possible combination of values
+    // that add up to 'i'.
     std::vector<combinations_type> all_combinations(target_sum + 1, combinations_type());
     // Initializing first position with an empty combination (selecting no value), since this is
     // the only combination that adds up to 0.
@@ -60,31 +61,31 @@ void display_all_combinations(int target, const combinations_type &combinations)
 int main() {
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_no_rep(target, std::vector<int>{5, 7, 4, 3});
+        const combinations_type combinations = all_sums_no_rep(target, {5, 7, 4, 3});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_no_rep(target, std::vector<int>{4, 2});
+        const combinations_type combinations = all_sums_no_rep(target, {4, 2});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_no_rep(target, std::vector<int>{2, 3, 5});
+        const combinations_type combinations = all_sums_no_rep(target, {2, 3, 5});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_no_rep(target, std::vector<int>{5, 1, 4});
+        const combinations_type combinations = all_sums_no_rep(target, {5, 1, 4});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 9;
-        const combinations_type combinations = all_sums_no_rep(target, std::vector<int>{4, 6, 7});
+        const combinations_type combinations = all_sums_no_rep(target, {4, 6, 7});
         display_all_combinations(target, combinations);
     }
     return 0;

@@ -7,7 +7,7 @@ constexpr int NULL_VALUE = -1;
 // Returns the best combination in 'values' that add up to 'target_sum'.
 // If there is more than one, any of them will be chosen.
 std::vector<int> best_sum(int target_sum, const std::vector<int> &values) {
-    // 'table[i]' indicates how many values are needed that add up to 'i',
+    // 'table[i]' indicates how many values are needed by the best combination that add up to 'i',
     // if it is 'NULL_VALUE' it means that it's not possible to complete the sum.
     std::vector<int> table(target_sum + 1, NULL_VALUE);
     table[0] = 0;  // initializing first position to zero
@@ -60,8 +60,8 @@ void display_sum_combination(const std::vector<int> &coins_list) {
 }
 
 int main() {
-    display_sum_combination(best_sum(7, std::vector<int>{5, 7, 4, 3}));     // [7]: sum: 7
-    display_sum_combination(best_sum(8, std::vector<int>{2, 3, 5}));        // [3, 5]: sum: 8
-    display_sum_combination(best_sum(8, std::vector<int>{5, 1, 4}));        // [4, 4]: sum: 8
-    display_sum_combination(best_sum(100, std::vector<int>{1, 2, 5, 25}));  // [25, 25, 25, 25]: sum: 0
+    display_sum_combination(best_sum(7, {5, 7, 4, 3}));     // [7]: sum: 7
+    display_sum_combination(best_sum(8, {2, 3, 5}));        // [3, 5]: sum: 8
+    display_sum_combination(best_sum(8, {5, 1, 4}));        // [4, 4]: sum: 8
+    display_sum_combination(best_sum(100, {1, 2, 5, 25}));  // [25, 25, 25, 25]: sum: 100
 }

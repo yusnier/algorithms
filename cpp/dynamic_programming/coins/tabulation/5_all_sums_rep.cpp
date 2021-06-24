@@ -54,31 +54,31 @@ void display_all_combinations(int target, const combinations_type &combinations)
 int main() {
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_rep(target, std::vector<int>{5, 7, 4, 3});
+        const combinations_type combinations = all_sums_rep(target, {5, 7, 4, 3});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_rep(target, std::vector<int>{4, 2});
+        const combinations_type combinations = all_sums_rep(target, {4, 2});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_rep(target, std::vector<int>{2, 3, 5});
+        const combinations_type combinations = all_sums_rep(target, {2, 3, 5});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_rep(target, std::vector<int>{5, 1, 4});
+        const combinations_type combinations = all_sums_rep(target, {5, 1, 4});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 9;
-        const combinations_type combinations = all_sums_rep(target, std::vector<int>{4, 6, 7});
+        const combinations_type combinations = all_sums_rep(target, {4, 6, 7});
         display_all_combinations(target, combinations);
     }
     return 0;

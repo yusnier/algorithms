@@ -11,10 +11,9 @@ typedef  std::vector<combination_type> combinations_type;
 // It uses an iterative DFS approach, where the combinations order depends on the order in 'values'.
 combinations_type all_sums_no_rep_dfs(int target_sum, const combination_type &values) {
     assert(!values.empty());
-    const int n = static_cast<int>(values.size());
     // This vector keeps a counter for each value in 'values', where 'counter[i]' are the times
     // that 'values[i]' is used in a possible combination.
-    std::vector<int> counters(n, 0);
+    std::vector<int> counters(values.size(), 0);
 
     int i = 0;
     int sum = target_sum;
@@ -22,20 +21,22 @@ combinations_type all_sums_no_rep_dfs(int target_sum, const combination_type &va
 
     while (i >= 0) {
         // We try to divide 'sum' between all the values on 'values' starting from 'i'.
-        while (i < n) {
+        while (i < values.size()) {
             counters[i] = sum / values[i];
             sum -= values[i] * counters[i];
             ++i;
         }
         // If there is no remainder, we have a new combination.
         if (sum == 0) {
+            //********** In this block we process the current combination. **********
             combination_type new_combination;
-            for (int j = 0; j < n; ++j) {
+            for (int j = 0; j < values.size(); ++j) {
                 if (counters[j] != 0) {
                     new_combination.insert(new_combination.end(), counters[j], values[j]);
                 }
             }
             result.push_back(new_combination);
+            //***********************************************************************
         }
         // Reset the last counter, since we can't get a new combination by decreasing it.
         sum += counters[i - 1] * values[i - 1];
@@ -76,31 +77,31 @@ int main()
 {
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_no_rep_dfs(target, std::vector<int>{5, 7, 4, 3});
+        const combinations_type combinations = all_sums_no_rep_dfs(target, {5, 7, 4, 3});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 7;
-        const combinations_type combinations = all_sums_no_rep_dfs(target, std::vector<int>{4, 2});
+        const combinations_type combinations = all_sums_no_rep_dfs(target, {4, 2});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_no_rep_dfs(target, std::vector<int>{2, 3, 5});
+        const combinations_type combinations = all_sums_no_rep_dfs(target, {2, 3, 5});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 8;
-        const combinations_type combinations = all_sums_no_rep_dfs(target, std::vector<int>{5, 1, 4});
+        const combinations_type combinations = all_sums_no_rep_dfs(target, {5, 1, 4});
         display_all_combinations(target, combinations);
     }
     std::cout << std::endl;
     {
         const int target = 9;
-        const combinations_type combinations = all_sums_no_rep_dfs(target, std::vector<int>{4, 6, 7});
+        const combinations_type combinations = all_sums_no_rep_dfs(target, {4, 6, 7});
         display_all_combinations(target, combinations);
     }
     return 0;

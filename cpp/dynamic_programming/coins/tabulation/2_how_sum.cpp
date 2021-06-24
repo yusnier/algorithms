@@ -5,8 +5,8 @@
 constexpr int NULL_VALUE = -1;
 
 // Returns some combination in 'values' that add up to 'target_sum'.
-std::vector<int> best_sum(int target_sum, const std::vector<int> &values) {
-    // 'table[i]' indicates how many values are needed that add up to 'i',
+std::vector<int> how_sum(int target_sum, const std::vector<int> &values) {
+    // 'table[i]' indicates how many values are needed by some combination that add up to 'i',
     // if it is 'NULL_VALUE' it means that it's not possible to complete the sum.
     std::vector<int> table(target_sum + 1, NULL_VALUE);
     table[0] = 0;  // initializing first position to zero
@@ -53,9 +53,9 @@ void display_sum_combination(const std::vector<int> &coins_list) {
 }
 
 int main() {
-    display_sum_combination(best_sum(7, std::vector<int>{2, 3}));       // [3, 2, 2]: sum: 7
-    display_sum_combination(best_sum(7, std::vector<int>{5, 3, 4, 7})); // [4, 3]: sum: 7
-    display_sum_combination(best_sum(7, std::vector<int>{2, 4}));       // []: sum: 0
-    display_sum_combination(best_sum(8, std::vector<int>{2, 3, 5}));    // [2, 2, 2, 2]: sum: 8
-    display_sum_combination(best_sum(300, std::vector<int>{7, 14}));    // []: sum: 0
+    display_sum_combination(how_sum(7, {2, 3}));       // [3, 2, 2]: sum: 7
+    display_sum_combination(how_sum(7, {5, 3, 4, 7})); // [4, 3]: sum: 7
+    display_sum_combination(how_sum(7, {2, 4}));       // []: sum: 0
+    display_sum_combination(how_sum(8, {2, 3, 5}));    // [2, 2, 2, 2]: sum: 8
+    display_sum_combination(how_sum(300, {7, 14}));    // []: sum: 0
 }
