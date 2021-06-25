@@ -10,29 +10,27 @@
 
 class UnionFind {
 private:
-    // Number of elements in this union find.
-    int uf_size;
     // Track the union of the components in the union find.
-    int n_components;
+    int components;
     // id[i] points to the parent of i, if id[i] == i then i is a root node.
     std::vector<int> id;
     // Used to track the sizes of each of the components.
     std::vector<int> sz;
 public:
-    explicit UnionFind(int size) : uf_size(size), n_components(size), id(size, 0), sz(size, 0) {
+    explicit UnionFind(int size) : components(size), id(size, 0), sz(size, 0) {
         assert(size >= 0);
-        for (auto i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             id[i] = i;  // Link to itself (self root).
             sz[i] = 1;  // Each component is originally of size one.
         }
     }
     // Return the number of elements in this UnionFind/Disjoint set.
     int size() const {
-        return uf_size;
+        return static_cast<int>(id.size());
     }
     // Returns the number of remaining components/sets.
     int num_components() const {
-        return n_components;
+        return components;
     }
     // Find which components/set 'p' belongs to, takes amortized constant time.
     int find(int p) {
@@ -73,7 +71,7 @@ public:
             id[root2] = root1;
         }
         // Since roots found are different we know that the number of components/sets has decreased by one.
-        --n_components;
+        --components;
     }
 };
 
@@ -90,9 +88,6 @@ struct kruskal_result {
 };
 
 kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
-    double min_cost = 0;
-    std::vector<edge> mst;
-
     // If what we want is to determine the 'Maximum' Spanning Tree instead of the 'Minimum',
     // we only need to reverse the sort order to descending (e.g. 'return a.cost > b.cost').
     std::vector<edge> sorted_edges = edges;
@@ -100,11 +95,14 @@ kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
         return a.cost < b.cost;
     });
 
+    double min_cost = 0;
+    std::vector<edge> mst;
+
     UnionFind uf(vertices);
     for (const auto &edge: sorted_edges) {
-        // Skip this edge to avoid creating a cycle in MST
+        // Skip this edge to avoid creating a cycle in MST.
         if (uf.connected(edge.from, edge.to)) { continue; };
-        // Include this edge
+        // Include this edge.
         uf.union_set(edge.from, edge.to);
         min_cost += edge.cost;
         mst.push_back(edge);
@@ -114,10 +112,10 @@ kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
 
     // Make sure we have a MST that includes all the nodes.
     if (uf.component_size(0) != vertices) {
-        return kruskal_result{0, std::vector<edge>()};
+        return {0, {}};
     }
 
-    return kruskal_result{min_cost, mst};
+    return {min_cost, mst};
 }
 
 void display_minimum_spanning_tree(const kruskal_result &result) {
@@ -134,25 +132,25 @@ void display_minimum_spanning_tree(const kruskal_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=JZBQLXgSGfs
     {
-        std::vector<edge> edges{
-                edge(0, 1, 5),
-                edge(1, 2, 4),
-                edge(2, 9, 2),
-                edge(0, 4, 1),
-                edge(0, 3, 4),
-                edge(1, 3, 2),
-                edge(2, 7, 4),
-                edge(2, 8, 1),
-                edge(9, 8, 0),
-                edge(4, 5, 1),
-                edge(5, 6, 7),
-                edge(6, 8, 4),
-                edge(4, 3, 2),
-                edge(5, 3, 5),
-                edge(3, 6, 11),
-                edge(6, 7, 1),
-                edge(3, 7, 2),
-                edge(7, 8, 6),
+        const std::vector<edge> edges{
+                {0, 1, 5},
+                {1, 2, 4},
+                {2, 9, 2},
+                {0, 4, 1},
+                {0, 3, 4},
+                {1, 3, 2},
+                {2, 7, 4},
+                {2, 8, 1},
+                {9, 8, 0},
+                {4, 5, 1},
+                {5, 6, 7},
+                {6, 8, 4},
+                {4, 3, 2},
+                {5, 3, 5},
+                {3, 6, 11},
+                {6, 7, 1},
+                {3, 7, 2},
+                {7, 8, 6},
         };
         const kruskal_result result = kruskal(10, edges);
         display_minimum_spanning_tree(result);
