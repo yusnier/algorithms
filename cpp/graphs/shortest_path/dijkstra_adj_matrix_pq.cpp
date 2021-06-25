@@ -36,7 +36,7 @@ dijkstra_result dijkstra(const adjacency_matrix &m, int src_vertex) {
     // shortest distance. We start with 'src_vertex'.
     typedef std::pair<double, int> pq_entry;
     std::priority_queue<pq_entry, std::vector<pq_entry>, std::greater<>> pq;
-    pq.push(pq_entry(0, src_vertex));
+    pq.push({0, src_vertex});
 
     while (!pq.empty()) {
         const double distance = pq.top().first;
@@ -54,11 +54,11 @@ dijkstra_result dijkstra(const adjacency_matrix &m, int src_vertex) {
         if (distance > dist[vertex]) { continue; }
         // For each vertex from 'vertex', apply relaxation for all the edges, except those already visited,
         // because this means that they already have the best possible distance.
-        for (auto i = 0; i < vertices; ++i) {
+        for (int i = 0; i < vertices; ++i) {
             if (visited[i]) { continue; }
             if (dist[vertex] + m[vertex][i] < dist[i]) {
                 dist[i] = dist[vertex] + m[vertex][i];
-                pq.push(pq_entry(dist[i], i));
+                pq.push({dist[i], i});
                 parent[i] = vertex;
             }
         }
@@ -70,7 +70,17 @@ dijkstra_result dijkstra(const adjacency_matrix &m, int src_vertex) {
         // returning a 'dijkstra_result', which means that 'dest_vertex' is not reachable from 'src_vertex'.
     }
 
-    return dijkstra_result{src_vertex, dist, parent};
+    return {src_vertex, dist, parent};
+}
+
+adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+    // Fill all edges with infinity by default.
+    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    // Assuming the distance for a vertex to reach itself is 0.
+    for (int i = 0; i < vertices; ++i) {
+        result[i][i] = 0;
+    }
+    return result;
 }
 
 void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
@@ -80,12 +90,12 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
+        for (int at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
         std::cout << "[" << path[0];
-        for (auto i = 1; i < path.size(); ++i) {
+        for (std::size_t i = 1; i < path.size(); ++i) {
             std::cout << " -> " << path[i] << "";
         }
         std::cout << "]";
@@ -95,19 +105,9 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
 
 void display_all_shortest_paths(const dijkstra_result &result) {
     const int vertices = static_cast<int>(result.dist.size());
-    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+    for (int dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
         display_shortest_path(result, dest_vertex);
     }
-}
-
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
-    // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
-    // Assuming the distance for a vertex to reach itself is 0.
-    for (auto i = 0; i < vertices; ++i) {
-        result[i][i] = 0;
-    }
-    return result;
 }
 
 int main() {

@@ -5,6 +5,7 @@
  * @author Yusnier M. Sosa, yusnier.msv@gmail.com
  */
 #include <algorithm>
+#include <cassert>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -25,7 +26,10 @@ public:
     explicit graph(int vertices) : adj_lists(vertices, std::vector<edge>()) {}
     std::size_t size() const { return adj_lists.size(); }
     const std::vector<edge> &adj_list(int vertex) const { return adj_lists[vertex]; }
-    void add_edge(int vertex, const edge &e) { adj_lists[vertex].push_back(e); }
+    void add_edge(int vertex, const edge &e) {
+        assert(vertex == e.from);
+        adj_lists[vertex].push_back(e);
+    }
 };
 
 struct bellman_ford_result {
@@ -49,9 +53,9 @@ bellman_ford_result bellman_ford(const graph &graph, int src_vertex) {
     // an edge, this means we have reached the optimal solution early.
     bool some_edge_relaxed = true;
     // For each vertex, apply relaxation for all the edges.
-    for (auto _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
+    for (int _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
         some_edge_relaxed = false;
-        for (auto i = 0; i < vertices; ++i) {
+        for (int i = 0; i < vertices; ++i) {
             for (const auto & edge: graph.adj_list(i)) {
                 if (dist[edge.from] + edge.cost < dist[edge.to]) {
                     dist[edge.to] = dist[edge.from] + edge.cost;
@@ -67,9 +71,9 @@ bellman_ford_result bellman_ford(const graph &graph, int src_vertex) {
     // to every edge that is part of or reaches into a negative cycle. But if the requirement
     // is only to know if there is a negative cycle or not, one iteration is enough, returning
     // early if any relaxation occurred.
-    for (auto _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
+    for (int _ = 0; _ < vertices - 1 && some_edge_relaxed; ++_) {
         some_edge_relaxed = false;
-        for (auto i = 0; i < vertices; ++i) {
+        for (int i = 0; i < vertices; ++i) {
             for (const auto &edge: graph.adj_list(i)) {
                 if (dist[edge.from] + edge.cost < dist[edge.to]) {
                     dist[edge.to] = NEGATIVE_INFINITY;
@@ -80,7 +84,7 @@ bellman_ford_result bellman_ford(const graph &graph, int src_vertex) {
         }
     }
 
-    return bellman_ford_result{src_vertex, dist, parent};
+    return {src_vertex, dist, parent};
 }
 
 void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
@@ -92,12 +96,12 @@ void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
         std::cout << "[negative cycle]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
+        for (int at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
         std::cout << "[" << path[0];
-        for (auto i = 1; i < path.size(); ++i) {
+        for (std::size_t i = 1; i < path.size(); ++i) {
             std::cout << " -> " << path[i] << "";
         }
         std::cout << "]";
@@ -107,7 +111,7 @@ void display_shortest_path(const bellman_ford_result &result, int dest_vertex) {
 
 void display_all_shortest_paths(const bellman_ford_result &result) {
     const int vertices = static_cast<int>(result.dist.size());
-    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+    for (int dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
         display_shortest_path(result, dest_vertex);
     }
 }

@@ -13,13 +13,8 @@
 constexpr double POSITIVE_INFINITY = std::numeric_limits<double>::infinity();
 constexpr double NEGATIVE_INFINITY = -POSITIVE_INFINITY;
 
-template <typename T>
-struct matrix {
-    typedef std::vector<std::vector<T>> type;
-};
-
-typedef matrix<double>::type adjacency_matrix;
-typedef matrix<int>::type parent_matrix;
+typedef std::vector<std::vector<double>> adjacency_matrix;
+typedef std::vector<std::vector<int>> parent_matrix;
 
 struct floyd_warshall_result {
     const adjacency_matrix dp;
@@ -35,8 +30,8 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
     parent_matrix parent(vertices, std::vector<int>(vertices, -1));
 
     // Copy input matrix and setup 'parent' matrix for path reconstruction.
-    for (auto i = 0; i < vertices; ++i) {
-        for (auto j = 0; j < vertices; ++j) {
+    for (int i = 0; i < vertices; ++i) {
+        for (int j = 0; j < vertices; ++j) {
             dp[i][j] = m[i][j];
             if (m[i][j] != POSITIVE_INFINITY) {
                 parent[i][j] = i;
@@ -69,7 +64,17 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
         }
     }
 
-    return floyd_warshall_result{dp, parent};
+    return {dp, parent};
+}
+
+adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+    // Fill all edges with infinity by default.
+    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    // Assuming the distance for a vertex to reach itself is 0.
+    for (int i = 0; i < vertices; ++i) {
+        result[i][i] = 0;
+    }
+    return result;
 }
 
 void display_shortest_path(const floyd_warshall_result &result, int src_vertex, int dest_vertex) {
@@ -81,14 +86,14 @@ void display_shortest_path(const floyd_warshall_result &result, int src_vertex, 
         std::cout << "[negative cycle]";
     } else {
         std::vector<int> path;
-        auto at = dest_vertex;
+        int at = dest_vertex;
         for (; at != src_vertex; at = result.parent[src_vertex][at]) {
             path.push_back(at);
         }
         path.push_back(at);
         std::reverse(path.begin(), path.end());
         std::cout << "[" << path[0];
-        for (auto i = 1; i < path.size(); ++i) {
+        for (std::size_t i = 1; i < path.size(); ++i) {
             std::cout << " -> " << path[i] << "";
         }
         std::cout << "]";
@@ -98,19 +103,9 @@ void display_shortest_path(const floyd_warshall_result &result, int src_vertex, 
 
 void display_all_shortest_paths(const floyd_warshall_result &result, int src_vertex) {
     const int vertices = static_cast<int>(result.dp.size());
-    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+    for (int dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
         display_shortest_path(result, src_vertex, dest_vertex);
     }
-}
-
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
-    // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
-    // Assuming the distance for a vertex to reach itself is 0.
-    for (auto i = 0; i < vertices; ++i) {
-        result[i][i] = 0;
-    }
-    return result;
 }
 
 int main() {

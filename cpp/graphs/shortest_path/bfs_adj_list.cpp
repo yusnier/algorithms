@@ -4,6 +4,7 @@
  * @author Yusnier M. Sosa, yusnier.msv@gmail.com
  */
 #include <algorithm>
+#include <cassert>
 #include <iomanip>
 #include <iostream>
 #include <queue>
@@ -24,7 +25,10 @@ public:
     explicit graph(int vertices) : adj_lists(vertices, std::vector<edge>()) {}
     std::size_t size() const { return adj_lists.size(); }
     const std::vector<edge> &adj_list(int vertex) const { return adj_lists[vertex]; }
-    void add_edge(int vertex, const edge &e) { adj_lists[vertex].push_back(e); }
+    void add_edge(int vertex, const edge &e) {
+        assert(vertex == e.from);
+        adj_lists[vertex].push_back(e);
+    }
 };
 
 struct bfs_result {
@@ -64,7 +68,7 @@ bfs_result bfs(const graph &graph, int src_vertex) {
         // returning a 'bfs_result', which means that 'dest_vertex' is not reachable from 'src_vertex'.
     }
 
-    return bfs_result{src_vertex, dist, parent};
+    return {src_vertex, dist, parent};
 }
 
 void display_shortest_path(const bfs_result &result, int dest_vertex) {
@@ -74,12 +78,12 @@ void display_shortest_path(const bfs_result &result, int dest_vertex) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
+        for (int at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
         std::cout << "[" << path[0];
-        for (auto i = 1; i < path.size(); ++i) {
+        for (std::size_t i = 1; i < path.size(); ++i) {
             std::cout << " -> " << path[i] << "";
         }
         std::cout << "]";
@@ -89,7 +93,7 @@ void display_shortest_path(const bfs_result &result, int dest_vertex) {
 
 void display_all_shortest_paths(const bfs_result &result) {
     const int vertices = static_cast<int>(result.dist.size());
-    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+    for (int dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
         display_shortest_path(result, dest_vertex);
     }
 }

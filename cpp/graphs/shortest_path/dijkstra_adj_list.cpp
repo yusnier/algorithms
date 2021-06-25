@@ -6,6 +6,7 @@
  * @author Yusnier M. Sosa, yusnier.msv@gmail.com
  */
 #include <algorithm>
+#include <cassert>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -25,7 +26,10 @@ public:
     explicit graph(int vertices) : adj_lists(vertices, std::vector<edge>()) {}
     std::size_t size() const { return adj_lists.size(); }
     const std::vector<edge> &adj_list(int vertex) const { return adj_lists[vertex]; }
-    void add_edge(int vertex, const edge &e) { adj_lists[vertex].push_back(e); }
+    void add_edge(int vertex, const edge &e) {
+        assert(vertex == e.from);
+        adj_lists[vertex].push_back(e);
+    }
 };
 
 struct dijkstra_result {
@@ -74,15 +78,15 @@ dijkstra_result dijkstra(const graph &graph, int src_vertex) {
         // that distance not equal to infinity which means that it's a reachable vertex from 'src_vertex.
         // A better approach in the algorithm to finding this vertex would be to use an indexed priority queue.
         min_vertex = 0;
-        while ((min_vertex < vertices) && visited[min_vertex]) ++min_vertex;
-        for (auto i = min_vertex + 1; i < vertices; ++i) {
+        while ((min_vertex < vertices) && visited[min_vertex]) { ++min_vertex; }
+        for (int i = min_vertex + 1; i < vertices; ++i) {
             if (!visited[i] && dist[i] < dist[min_vertex]) {
                 min_vertex = i;
             }
         }
     }
 
-    return dijkstra_result{src_vertex, dist, parent};
+    return {src_vertex, dist, parent};
 }
 
 void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
@@ -92,12 +96,12 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
         std::cout << "[unreachable]";
     } else {
         std::vector<int> path;
-        for (auto at = dest_vertex; at != -1; at = result.parent[at]) {
+        for (int at = dest_vertex; at != -1; at = result.parent[at]) {
             path.push_back(at);
         }
         std::reverse(path.begin(), path.end());
         std::cout << "[" << path[0];
-        for (auto i = 1; i < path.size(); ++i) {
+        for (std::size_t i = 1; i < path.size(); ++i) {
             std::cout << " -> " << path[i] << "";
         }
         std::cout << "]";
@@ -107,7 +111,7 @@ void display_shortest_path(const dijkstra_result &result, int dest_vertex) {
 
 void display_all_shortest_paths(const dijkstra_result &result) {
     const int vertices = static_cast<int>(result.dist.size());
-    for (auto dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
+    for (int dest_vertex = 0; dest_vertex < vertices; ++dest_vertex) {
         display_shortest_path(result, dest_vertex);
     }
 }
