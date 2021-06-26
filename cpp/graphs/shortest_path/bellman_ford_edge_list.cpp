@@ -100,7 +100,7 @@ void display_all_shortest_paths(const bellman_ford_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0, 1, 5},
                 {0, 2, 1},
                 {1, 2, 2},
@@ -118,7 +118,7 @@ int main() {
     }
     std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0, 1, 4},
                 {0, 6, 2},
                 {1, 1, -1},
@@ -134,7 +134,7 @@ int main() {
     }
     std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0, 1, 5},
                 {1, 2, 20},
                 {1, 5, 30},
@@ -154,7 +154,7 @@ int main() {
     }
     std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0, 1, 1},
                 {1, 2, 1},
                 {2, 4, 1},
@@ -171,7 +171,7 @@ int main() {
     }
     std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0,  1,  1},
                 {1,  2,  8},
                 {1,  3,  4},

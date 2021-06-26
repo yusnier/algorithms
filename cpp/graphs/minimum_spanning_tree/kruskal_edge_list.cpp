@@ -132,7 +132,7 @@ void display_minimum_spanning_tree(const kruskal_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=JZBQLXgSGfs
     {
-        const std::vector<edge> edges{
+        const std::vector<edge> edges = {
                 {0, 1, 5},
                 {1, 2, 4},
                 {2, 9, 2},
