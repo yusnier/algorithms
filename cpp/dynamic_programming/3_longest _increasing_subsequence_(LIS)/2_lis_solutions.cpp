@@ -24,9 +24,9 @@ vector2d build_solutions(const std::vector<int> &sequence, const vector2d &paren
     return solutions;
 }
 
-// Variant of 'lis_v1' to return all the solutions for the LIS on 'sequence' in O(n^2).
+// Variant of 'lis_v1()' to return all the solutions for the LIS on 'sequence' in O(n^2).
 // Reference: Competitive Programming 3, P. 105, Steven & Felix Halim.
-vector2d lis_v1_solutions(const std::vector<int> &sequence) {
+vector2d lis_solutions_v1(const std::vector<int> &sequence) {
     if (sequence.empty()) { return {}; }
 
     // Let 'lis[i]' be the LIS ending at index 'i'.
@@ -50,6 +50,7 @@ vector2d lis_v1_solutions(const std::vector<int> &sequence) {
         max_lis_size = std::max(max_lis_size, lis[i]);
     }
 
+    // Block to construct the solutions.
     vector2d result;
     for (int i = 0; i < lis.size(); ++i) {
         if (lis[i] == max_lis_size) {
@@ -61,10 +62,10 @@ vector2d lis_v1_solutions(const std::vector<int> &sequence) {
     return result;
 }
 
-// Variant of 'lis_v2' to return all the solutions for the LIS on 'sequence' in O(n^2).
+// Variant of 'lis_v2()' to return all the solutions for the LIS on 'sequence' in O(n^2).
 // In this variant we make the search to all 'j' from 'i' (for every j > i),
 // instead of from all j to i (for every j < i), like in v1 version.
-vector2d lis_v2_solutions(const std::vector<int> &sequence) {
+vector2d lis_solutions_v2(const std::vector<int> &sequence) {
     if (sequence.empty()) { return {}; }
 
     // Let 'lis[i]' be the LIS ending at index 'i'.
@@ -88,6 +89,7 @@ vector2d lis_v2_solutions(const std::vector<int> &sequence) {
         }
     }
 
+    // Block to construct the solutions.
     vector2d result;
     for (int i = 0; i < lis.size(); ++i) {
         if (lis[i] == max_lis_size) {
@@ -100,18 +102,19 @@ vector2d lis_v2_solutions(const std::vector<int> &sequence) {
 }
 
 void test_algorithms(const std::vector<int> &sequence) {
-    const std::set<vector2d> lis_solutions = {
-            lis_v1_solutions(sequence),
-            lis_v2_solutions(sequence),
+    const std::set<vector2d> lis_solutions_set = {
+            lis_solutions_v1(sequence),
+            lis_solutions_v2(sequence),
     };
-    assert(lis_solutions.size() == 1);  // checking that all algorithms have the same result.
-    if (lis_solutions.begin()->empty()) {
+    assert(lis_solutions_set.size() == 1);  // checking that all algorithms have the same result.
+    const vector2d &lis_solutions = *lis_solutions_set.begin();
+    if (lis_solutions.empty()) {
         std::cout << "No Solution" << std::endl;
         return;
     }
-    std::cout << "LIS: " << lis_solutions.begin()->at(0).size() << std::endl;
+    std::cout << "LIS: " << lis_solutions.size() << std::endl;
     std::cout << "Solutions: " << std::endl;
-    for (const auto &solution: *lis_solutions.begin()) {
+    for (const auto &solution: lis_solutions) {
         std::cout << "[";
         if (!solution.empty()) {
             std::cout << solution[0];

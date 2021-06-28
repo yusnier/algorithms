@@ -67,13 +67,14 @@ int lis_patient_sort(const std::vector<int> &sequence) {
 }
 
 void test_algorithms(const std::vector<int> &sequence) {
-    const std::set<int> lis = {
+    const std::set<int> lis_set = {
             lis_v1(sequence),
             lis_v2(sequence),
             lis_patient_sort(sequence),
     };
-    assert(lis.size() == 1);  // checking that all algorithms have the same result.
-    std::cout << "LIS: " << *lis.begin() << (*lis.begin() == 0 ? " -> No Solution" : "") << std::endl;
+    assert(lis_set.size() == 1);  // checking that all algorithms have the same result.
+    const int lis = *lis_set.begin();
+    std::cout << "LIS: " << lis << (lis == 0 ? " -> No Solution" : "") << std::endl;
 }
 
 int main() {
