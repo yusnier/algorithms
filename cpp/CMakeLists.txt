@@ -6,18 +6,22 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(connected_cells_in_a_grid bfs/connected_cells_in_a_grid.cpp)
 
-add_executable(1_can_sum dynamic_programming/coins/tabulation/1_can_sum.cpp)
-add_executable(2_how_sum dynamic_programming/coins/tabulation/2_how_sum.cpp)
-add_executable(3_best_sum dynamic_programming/coins/tabulation/3_best_sum.cpp)
-add_executable(4_how_many_sums_rep dynamic_programming/coins/tabulation/4_how_many_sums_rep.cpp)
-add_executable(5_all_sums_rep dynamic_programming/coins/tabulation/5_all_sums_rep.cpp)
-add_executable(6_all_sums_no_rep dynamic_programming/coins/tabulation/6_all_sums_no_rep.cpp)
-add_executable(7_all_sums_no_rep_dfs dynamic_programming/coins/tabulation/7_all_sums_no_rep_dfs.cpp)
+add_executable(1_maximum_spend dynamic_programming/1_wedding_shopping/1_maximum_spend.cpp)
 
-add_executable(1_maximum_spend dynamic_programming/wedding_shopping/1_maximum_spend.cpp)
+add_executable(max_1d_range_sum dynamic_programming/2_max_range_sum/max_1d_range_sum.cpp)
+add_executable(max_2d_range_sum dynamic_programming/2_max_range_sum/max_2d_range_sum.cpp)
 
-add_executable(max_1d_range_sum dynamic_programming/max_range_sum/max_1d_range_sum.cpp)
-add_executable(max_2d_range_sum dynamic_programming/max_range_sum/max_2d_range_sum.cpp)
+add_executable(1_lis "dynamic_programming/3_longest _increasing_subsequence_(LIS)/1_lis.cpp")
+add_executable(2_lis_solutions "dynamic_programming/3_longest _increasing_subsequence_(LIS)/2_lis_solutions.cpp")
+add_executable(3_box_stacking "dynamic_programming/3_longest _increasing_subsequence_(LIS)/3_box_stacking.cpp")
+
+add_executable(1_can_sum "dynamic_programming/5_coin_change_(CC)/tabulation/1_can_sum.cpp")
+add_executable(2_how_sum "dynamic_programming/5_coin_change_(CC)/tabulation/2_how_sum.cpp")
+add_executable(3_best_sum "dynamic_programming/5_coin_change_(CC)/tabulation/3_best_sum.cpp")
+add_executable(4_how_many_sums_rep "dynamic_programming/5_coin_change_(CC)/tabulation/4_how_many_sums_rep.cpp")
+add_executable(5_all_sums_rep "dynamic_programming/5_coin_change_(CC)/tabulation/5_all_sums_rep.cpp")
+add_executable(6_all_sums_no_rep "dynamic_programming/5_coin_change_(CC)/tabulation/6_all_sums_no_rep.cpp")
+add_executable(7_all_sums_no_rep_dfs "dynamic_programming/5_coin_change_(CC)/tabulation/7_all_sums_no_rep_dfs.cpp")
 
 add_executable(next_permutation combinatorics/permutations/next_permutation.cpp)
 add_executable(prev_permutation combinatorics/permutations/prev_permutation.cpp)
@@ -40,3 +44,4 @@ add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_p
 add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
 
 add_executable(test test.cpp)
+
