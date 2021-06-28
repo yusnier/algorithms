@@ -135,4 +135,6 @@ int main() {
     test_algorithms({5, 4, 3, 2, 1, 0});
     std::cout << std::endl;
     test_algorithms({});
+
+    return 0;
 }
