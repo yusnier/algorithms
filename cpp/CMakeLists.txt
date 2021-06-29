@@ -11,9 +11,12 @@ add_executable(1_maximum_spend dynamic_programming/1_wedding_shopping/1_maximum_
 add_executable(max_1d_range_sum dynamic_programming/2_max_range_sum/max_1d_range_sum.cpp)
 add_executable(max_2d_range_sum dynamic_programming/2_max_range_sum/max_2d_range_sum.cpp)
 
-add_executable(1_lis "dynamic_programming/3_longest _increasing_subsequence_(LIS)/1_lis.cpp")
-add_executable(2_lis_solutions "dynamic_programming/3_longest _increasing_subsequence_(LIS)/2_lis_solutions.cpp")
-add_executable(3_box_stacking "dynamic_programming/3_longest _increasing_subsequence_(LIS)/3_box_stacking.cpp")
+add_executable(1_lis "dynamic_programming/3_longest_increasing_subsequence_(LIS)/1_lis.cpp")
+add_executable(2_lis_solutions "dynamic_programming/3_longest_increasing_subsequence_(LIS)/2_lis_solutions.cpp")
+add_executable(3_box_stacking "dynamic_programming/3_longest_increasing_subsequence_(LIS)/3_box_stacking.cpp")
+
+add_executable(1_knapsack "dynamic_programming/4_0-1_knapsack_(subset_sum)/1_knapsack.cpp")
+add_executable(2_knapsack_solutions "dynamic_programming/4_0-1_knapsack_(subset_sum)/2_knapsack_solutions.cpp")
 
 add_executable(1_can_sum "dynamic_programming/5_coin_change_(CC)/tabulation/1_can_sum.cpp")
 add_executable(2_how_sum "dynamic_programming/5_coin_change_(CC)/tabulation/2_how_sum.cpp")
@@ -44,4 +47,3 @@ add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_p
 add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
 
 add_executable(test test.cpp)
-
