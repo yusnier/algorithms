@@ -71,7 +71,7 @@ std::vector<std::pair<char, operation>> minimum_edit_distance_solution(const std
 }
 
 void test_algorithms(const std::string &a, const std::string &b) {
-    static std::string ops[] = {"OK", "changed", "inserted", "deleted"};
+    const std::string ops[] = {"OK", "changed", "inserted", "deleted"};
     const int min = minimum_edit_distance(a, b);
     std::cout << "Minimum operations: " << min << std::endl;
     const std::vector<std::pair<char, operation>> solution = minimum_edit_distance_solution(a, b);
