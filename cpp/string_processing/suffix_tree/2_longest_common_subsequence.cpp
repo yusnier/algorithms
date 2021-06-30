@@ -11,8 +11,7 @@ int lcs(const std::string &a, const std::string &b) {
         for (int j = 0; j <= b.length(); ++j) {
             if (i == 0 || j == 0) {
                 table[i][j] = 0;
-            }
-            else if (a[i - 1] == b[j - 1]) {
+            } else if (a[i - 1] == b[j - 1]) {
                 table[i][j] = table[i - 1][j - 1] + 1;
             } else {
                 table[i][j] = std::max(table[i - 1][j], table[i][j - 1]);
@@ -30,8 +29,7 @@ std::string lcs_solution(const std::string &a, const std::string &b) {
         for (int j = 0; j <= b.length(); ++j) {
             if (i == 0 || j == 0) {
                 table[i][j] = 0;
-            }
-            else if (a[i - 1] == b[j - 1]) {
+            } else if (a[i - 1] == b[j - 1]) {
                 table[i][j] = table[i - 1][j - 1] + 1;
             } else {
                 table[i][j] = std::max(table[i - 1][j], table[i][j - 1]);
