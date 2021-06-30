@@ -46,4 +46,6 @@ add_executable(dijkstra_adj_matrix_pq graphs/shortest_path/dijkstra_adj_matrix_p
 
 add_executable(floyd_warshall_adj_matrix graphs/shortest_path/floyd_warshall_adj_matrix.cpp)
 
+add_executable(suffix_tree string_processing/suffix_tree/suffix_tree.cpp)
+
 add_executable(test test.cpp)
