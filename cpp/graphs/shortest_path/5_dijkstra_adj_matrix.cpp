@@ -1,19 +1,11 @@
-/**
- * Implementation of Dijkstra's shortest path algorithm from a start node to all other nodes.
- * Dijkstra's can also be modified to find the shortest path between a starting node and a
- * specific ending node in the graph with minimal effort.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
-#include <queue>
 #include <vector>
 
 constexpr double POSITIVE_INFINITY = std::numeric_limits<double>::infinity();
 
-typedef std::vector<std::vector<double>> adjacency_matrix;
+typedef std::vector<std::vector<double>> adj_matrix;
 
 struct dijkstra_result {
     const int src_vertex;
@@ -21,7 +13,7 @@ struct dijkstra_result {
     const std::vector<int> parent;
 };
 
-dijkstra_result dijkstra(const adjacency_matrix &m, int src_vertex) {
+dijkstra_result dijkstra(const adj_matrix &m, int src_vertex) {
     const int vertices = static_cast<int>(m.size());
     // Initialize the distance to all vertices to be infinity except for the start vertex which is zero.
     // dist[i] is the current shortest distance from 'src_vertex' to vertex i.
@@ -32,50 +24,49 @@ dijkstra_result dijkstra(const adjacency_matrix &m, int src_vertex) {
     std::vector<int> parent(vertices, -1);
     // Boolean array to mark visited/unvisited for each node.
     std::vector<bool> visited(vertices, false);
-    // Keep a priority queue of the next most promising vertex to visit, which is the unvisited one with the
-    // shortest distance. We start with 'src_vertex'.
-    typedef std::pair<double, int> pq_entry;
-    std::priority_queue<pq_entry, std::vector<pq_entry>, std::greater<>> pq;
-    pq.push({0, src_vertex});
+    // The first vertex to start with the shortest distance is 'src_vertex'.
+    int min_vertex = src_vertex;
 
-    while (!pq.empty()) {
-        const double distance = pq.top().first;
-        const int vertex = pq.top().second;
-        pq.pop();
-        visited[vertex] = true;
-        // The usual implementation of Dijkstra’s requires heapDecreaseKey operation in binary heap data
-        // structure that is not supported by priority queue in STL, so every time we update the distance
-        // to a vertex, we enqueue a pair (newer/shorter distance, vertex) into pq and leave the inferior
-        // pair (older/longer distance, vertex) inside pq, This is called 'Lazy Deletion' and it causes more
-        // than one copy of the same vertex in pq with different distances from source. That is why we have
-        // the check earlier to process only the first dequeued vertex information pair which has the
-        // correct/shorter distance (other copies will have the outdated/longer distance). This is no ideal,
-        // but inserting a new pair in O(log(n)) is much faster than searching for the key in the pq in O(n).
-        if (distance > dist[vertex]) { continue; }
+    // The loop stops either when:
+    // min_vertex == vertices -> All vertices were already visited and relaxed OR
+    // dist[min_vertex] == POSITIVE_INFINITY -> remaining unvisited nodes are not reachable from 'src_node'.
+    while (min_vertex < vertices && dist[min_vertex] != POSITIVE_INFINITY) {
+        visited[min_vertex] = true;
         // For each vertex from 'vertex', apply relaxation for all the edges, except those already visited,
         // because this means that they already have the best possible distance.
         for (int i = 0; i < vertices; ++i) {
             if (visited[i]) { continue; }
-            if (dist[vertex] + m[vertex][i] < dist[i]) {
-                dist[i] = dist[vertex] + m[vertex][i];
-                pq.push({dist[i], i});
-                parent[i] = vertex;
+            if (dist[min_vertex] + m[min_vertex][i] < dist[i]) {
+                dist[i] = dist[min_vertex] + m[min_vertex][i];
+                parent[i] = min_vertex;
             }
         }
+
         // If we are trying to solve 'Single Pair Shortest Path (SPSP)' we can add a new function parameter
         // 'dest_vertex' and stop early at this point once we meet the condition: 'vertex == dest_vertex'.
         // If we want to return a 'bfs_result' for path reconstruction we can just break the loop.
         // But if we want just to return the shortest distance we can make a 'return dist[dest_vertex]' at
         // at this point, also putting a 'return POSITIVE_INFINITY' at the end of the function, instead of
         // returning a 'dijkstra_result', which means that 'dest_vertex' is not reachable from 'src_vertex'.
+
+        // Looking for the most promising vertex, which is the unvisited one with the shortest distance,
+        // that distance not equal to infinity which means that it's a reachable vertex from 'src_vertex.
+        // A better approach in the algorithm to finding this vertex would be to use an indexed priority queue.
+        min_vertex = 0;
+        while ((min_vertex < vertices) && visited[min_vertex]) { ++min_vertex; }
+        for (int i = min_vertex + 1; i < vertices; ++i) {
+            if (!visited[i] && dist[i] < dist[min_vertex]) {
+                min_vertex = i;
+            }
+        }
     }
 
     return {src_vertex, dist, parent};
 }
 
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+adj_matrix setup_disconnected_adjacency_matrix(int vertices) {
     // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    adj_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
     // Assuming the distance for a vertex to reach itself is 0.
     for (int i = 0; i < vertices; ++i) {
         result[i][i] = 0;
@@ -113,7 +104,7 @@ void display_all_shortest_paths(const dijkstra_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(6);
+        adj_matrix m = setup_disconnected_adjacency_matrix(6);
         m[0][1] = 5;
         m[0][2] = 1;
         m[1][2] = 2;
@@ -130,7 +121,7 @@ int main() {
     }
     std::cout << "Example 2" << std::endl;  // resources/digraph_weighted_no_neg_cycles.svg
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        adj_matrix m = setup_disconnected_adjacency_matrix(12);
         m[0][1] = 1;
         m[1][2] = 8;
         m[1][3] = 4;
