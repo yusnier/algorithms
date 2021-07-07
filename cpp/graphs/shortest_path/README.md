@@ -1,24 +1,24 @@
 # Graphs algorithms
 ### Single source shortest path (SSSP)
-- SSSP on Unweighted Graph
+- SSSP on Directed Unweighted Graph
   - **Breadth First Search (BFS)**
-    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bfs_adj_list.cpp) **O(V+E)**
-    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bfs_adj_matrix.cpp) **O(V<sup>2</sup>)**
-- SSSP on Weighted Graph
+    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/1_bfs_adj_list.cpp) **O(V+E)** <b>*</b>
+    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/2_bfs_adj_matrix.cpp) **O(V<sup>2</sup>)**
+- SSSP on Directed Weighted Graph (*No Negative Cycles*)
   - **Dijkstra**
-    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_list.cpp) **O(V<sup>2</sup>+E)**
-    - [Adjacency list using Priority Queue](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_list_pq.cpp) **O(V+Elog(V))**
-    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_matrix.cpp) **O(2V<sup>2</sup>)**
-    - [Adjacency matrix using Priority Queue](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/dijkstra_adj_matrix_pq.cpp) **O(V<sup>2</sup>+Elog(V))**
-- SSSP on Graph with Negative Weight Cycle
+    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/3_dijkstra_adj_list.cpp) **O(V<sup>2</sup>+E)**
+    - [Adjacency list using Priority Queue](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/4_dijkstra_adj_list_pq.cpp) **O(V+Elog(V))** <b>*</b>
+    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/5_dijkstra_adj_matrix.cpp) **O(2V<sup>2</sup>)**
+    - [Adjacency matrix using Priority Queue](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/6_dijkstra_adj_matrix_pq.cpp) **O(V<sup>2</sup>+Elog(V))**
+- SSSP on Directed Weighted Graph with Negative Weight Cycle
   - **Bellman-Ford**
-    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_list.cpp) **O(VE)**
-    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_adj_matrix.cpp) **O(V<sup>3</sup>)**
-    - [Edge list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/bellman_ford_edge_list.cpp) **O(VE)**
+    - [Adjacency list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/7_bellman_ford_adj_list.cpp) **O(VE)** <b>*</b>
+    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/8_bellman_ford_adj_matrix.cpp) **O(V<sup>3</sup>)**
+    - [Edge list](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/9_bellman_ford_edge_list.cpp) **O(VE)**
 ### All pairs shortest path (APSP)
-- APSP on Graph with Negative Weight Cycle
+- APSP on Directed Weighted Graph with Negative Weight Cycle
   - **Floyd-Warshall**
-    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/floyd_warshall_adj_matrix.cpp) **O(V<sup>3</sup>)**
+    - [Adjacency matrix](https://github.com/yusnier/algorithms/blob/main/cpp/graphs/shortest_path/10_floyd_warshall_adj_matrix.cpp) **O(V<sup>3</sup>)**
     - Finding the **(Cheapest/Negative) Cycle**
       > Floyd-Warshall algorithm can be used to detect whether the (small) graph has a **cycle**,
       a **negative cycle**, and even finding the **cheapest (non-negative) cycle** among all possible
@@ -62,6 +62,6 @@ algorithm; **Ok** → a correct algorithm but not the best; **Bad** → a (very)
 | Negative cycle  | Cannot detect  | Cannot detect     | Can detect     | Can detect           |
 | Small graph     | WA if weighted | Overkill          | Overkill       | Best                 |
 
-<sub>Reference: Competitive Programming 3, P. 161, Steven & Felix Halim</sub>
+<sub>Reference: [Competitive Programming 3](https://cpbook.net/), P. 161, Steven & Felix Halim</sub>
 
 
