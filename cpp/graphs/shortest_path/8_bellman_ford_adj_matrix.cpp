@@ -1,9 +1,3 @@
-/**
- * An implementation of the Bellman-Ford algorithm. The algorithm finds the shortest path between
- * a starting node and all other nodes in the graph. The algorithm also detects negative cycles.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
@@ -12,7 +6,7 @@
 constexpr double POSITIVE_INFINITY = std::numeric_limits<double>::infinity();
 constexpr double NEGATIVE_INFINITY = -POSITIVE_INFINITY;
 
-typedef std::vector<std::vector<double>> adjacency_matrix;
+typedef std::vector<std::vector<double>> adj_matrix;
 
 struct bellman_ford_result {
     const int src_vertex;
@@ -20,14 +14,14 @@ struct bellman_ford_result {
     const std::vector<int> parent;
 };
 
-bellman_ford_result bellman_ford(const adjacency_matrix &m, int src_vertex) {
+bellman_ford_result bellman_ford(const adj_matrix &m, int src_vertex) {
     const int vertices = static_cast<int>(m.size());
-    // Initialize the distance to all nodes to be infinity
-    // except for the start node which is zero.
+    // Initialize the distance to all vertices to be infinity except for the start vertex which is zero.
+    // dist[i] is the current shortest distance from 'src_vertex' to vertex i.
     std::vector<double> dist(vertices, POSITIVE_INFINITY);
     dist[src_vertex] = 0;
-    // Initialize parent array which will allows for shortest path
-    // reconstruction after the algorithm has terminated.
+    // This array will allows for shortest path reconstruction (if required) after the algorithm has terminated.
+    // parent[i] is the vertex where vertex i comes from in the shortest path.
     std::vector<int> parent(vertices, -1);
 
     // Only in the worst case does it take 'vertices'-1 iterations for the Bellman-Ford
@@ -69,9 +63,9 @@ bellman_ford_result bellman_ford(const adjacency_matrix &m, int src_vertex) {
     return {src_vertex, dist, parent};
 }
 
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+adj_matrix setup_disconnected_adjacency_matrix(int vertices) {
     // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    adj_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
     // Assuming the distance for a vertex to reach itself is 0.
     for (int i = 0; i < vertices; ++i) {
         result[i][i] = 0;
@@ -111,7 +105,7 @@ void display_all_shortest_paths(const bellman_ford_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(6);
+        adj_matrix m = setup_disconnected_adjacency_matrix(6);
         m[0][1] = 5;
         m[0][2] = 1;
         m[1][2] = 2;
@@ -128,7 +122,7 @@ int main() {
     }
     std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(7);
+        adj_matrix m = setup_disconnected_adjacency_matrix(7);
         m[0][1] = 4;
         m[0][6] = 2;
         m[1][1] = -1;
@@ -143,7 +137,7 @@ int main() {
     }
     std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(10);
+        adj_matrix m = setup_disconnected_adjacency_matrix(10);
         m[0][1] = 5;
         m[1][2] = 20;
         m[1][5] = 30;
@@ -162,7 +156,7 @@ int main() {
     }
     std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(9);
+        adj_matrix m = setup_disconnected_adjacency_matrix(9);
         m[0][1] = 1;
         m[1][2] = 1;
         m[2][4] = 1;
@@ -178,7 +172,7 @@ int main() {
     }
     std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        adj_matrix m = setup_disconnected_adjacency_matrix(12);
         m[0][1] = 1;
         m[1][2] = 8;
         m[1][3] = 4;

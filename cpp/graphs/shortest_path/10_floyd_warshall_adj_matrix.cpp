@@ -1,10 +1,3 @@
-/**
- * This file contains an implementation of the Floyd-Warshall algorithm to find all pairs of
- * shortest paths between nodes in a graph. We also demonstrate how to detect negative cycles and
- * reconstruct the shortest path.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
@@ -13,18 +6,18 @@
 constexpr double POSITIVE_INFINITY = std::numeric_limits<double>::infinity();
 constexpr double NEGATIVE_INFINITY = -POSITIVE_INFINITY;
 
-typedef std::vector<std::vector<double>> adjacency_matrix;
+typedef std::vector<std::vector<double>> adj_matrix;
 typedef std::vector<std::vector<int>> parent_matrix;
 
 struct floyd_warshall_result {
-    const adjacency_matrix dp;
+    const adj_matrix dp;
     const parent_matrix parent;
 };
 
-floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
+floyd_warshall_result floyd_warshall(const adj_matrix &m) {
     const int vertices = static_cast<int>(m.size());
     // This matrix is the one that will be processed by the algorithm.
-    adjacency_matrix dp(vertices, std::vector<double>(vertices, 0));
+    adj_matrix dp(vertices, std::vector<double>(vertices, 0));
     // This matrix will allows for shortest path reconstruction (if required) after the algorithm has terminated.
     // parent[i][j] is the vertex where vertex j comes from in the shortest path.
     parent_matrix parent(vertices, std::vector<int>(vertices, -1));
@@ -67,9 +60,9 @@ floyd_warshall_result floyd_warshall(const adjacency_matrix &m) {
     return {dp, parent};
 }
 
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+adj_matrix setup_disconnected_adjacency_matrix(int vertices) {
     // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    adj_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
     // Assuming the distance for a vertex to reach itself is 0.
     for (int i = 0; i < vertices; ++i) {
         result[i][i] = 0;
@@ -111,7 +104,7 @@ void display_all_shortest_paths(const floyd_warshall_result &result, int src_ver
 int main() {
     std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=pSqmAO-m7Lk (graph example 2)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(6);
+        adj_matrix m = setup_disconnected_adjacency_matrix(6);
         m[0][1] = 5;
         m[0][2] = 1;
         m[1][2] = 2;
@@ -128,7 +121,7 @@ int main() {
     }
     std::cout << "Example 2" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 1)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(7);
+        adj_matrix m = setup_disconnected_adjacency_matrix(7);
         m[0][1] = 4;
         m[0][6] = 2;
         m[1][1] = -1;
@@ -143,7 +136,7 @@ int main() {
     }
     std::cout << "Example 3" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 2)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(10);
+        adj_matrix m = setup_disconnected_adjacency_matrix(10);
         m[0][1] = 5;
         m[1][2] = 20;
         m[1][5] = 30;
@@ -162,7 +155,7 @@ int main() {
     }
     std::cout << "Example 4" << std::endl;  // https://www.youtube.com/watch?v=lyw4FaxrwHg (graph example 3 from github)
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(9);
+        adj_matrix m = setup_disconnected_adjacency_matrix(9);
         m[0][1] = 1;
         m[1][2] = 1;
         m[2][4] = 1;
@@ -178,7 +171,7 @@ int main() {
     }
     std::cout << "Example 5" << std::endl;  // resources/digraph_weighted_neg_cycles.svg
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        adj_matrix m = setup_disconnected_adjacency_matrix(12);
         m[0][1] = 1;
         m[1][2] = 8;
         m[1][3] = 4;

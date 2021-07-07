@@ -1,9 +1,3 @@
-/**
- * An implementation of the Bellman-Ford algorithm. The algorithm finds the shortest path between
- * a starting node and all other nodes in the graph. The algorithm also detects negative cycles.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <cassert>
 #include <iomanip>
@@ -18,6 +12,7 @@ struct edge {
     const int from, to;
     const double cost;
 };
+
 // Directed graph with adjacency lists.
 class graph {
 private:
@@ -40,12 +35,12 @@ struct bellman_ford_result {
 
 bellman_ford_result bellman_ford(const graph &graph, int src_vertex) {
     const int vertices = static_cast<int>(graph.size());
-    // Initialize the distance to all nodes to be infinity
-    // except for the start node which is zero.
+    // Initialize the distance to all vertices to be infinity except for the start vertex which is zero.
+    // dist[i] is the current shortest distance from 'src_vertex' to vertex i.
     std::vector<double> dist(vertices, POSITIVE_INFINITY);
     dist[src_vertex] = 0;
-    // Initialize parent array which will allows for shortest path
-    // reconstruction after the algorithm has terminated.
+    // This array will allows for shortest path reconstruction (if required) after the algorithm has terminated.
+    // parent[i] is the vertex where vertex i comes from in the shortest path.
     std::vector<int> parent(vertices, -1);
 
     // Only in the worst case does it take 'vertices'-1 iterations for the Bellman-Ford
@@ -131,9 +126,6 @@ int main() {
         g.add_edge(3, {3, 4, 2});
         g.add_edge(3, {3, 5, 6});
         g.add_edge(4, {4, 5, 1});
-        std::vector<edge> edges{
-
-        };
         const bellman_ford_result result = bellman_ford(g, 0);
         display_all_shortest_paths(result);
     }
