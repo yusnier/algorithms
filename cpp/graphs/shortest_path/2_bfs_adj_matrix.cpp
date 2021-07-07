@@ -1,8 +1,3 @@
-/**
- * An implementation of BFS with an adjacency matrix.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <iomanip>
 #include <iostream>

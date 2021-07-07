@@ -1,8 +1,3 @@
-/**
- * An implementation of BFS with an adjacency list.
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
 #include <cassert>
 #include <iomanip>
@@ -17,6 +12,7 @@ struct edge {
     const int from, to;
     const double cost;
 };
+
 // Directed graph with adjacency lists.
 class graph {
 private:
