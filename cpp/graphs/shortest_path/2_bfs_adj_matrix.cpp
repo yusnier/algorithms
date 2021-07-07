@@ -6,7 +6,7 @@
 
 constexpr double POSITIVE_INFINITY = std::numeric_limits<double>::infinity();
 
-typedef std::vector<std::vector<double>> adjacency_matrix;
+typedef std::vector<std::vector<double>> adj_matrix;
 
 struct bfs_result {
     const int src_vertex;
@@ -14,7 +14,7 @@ struct bfs_result {
     const std::vector<int> parent;
 };
 
-bfs_result bfs(const adjacency_matrix &m, int src_vertex) {
+bfs_result bfs(const adj_matrix &m, int src_vertex) {
     const int vertices = static_cast<int>(m.size());
     // Initialize the distance to all vertices to be infinity except for the start vertex which is zero.
     // dist[i] is the current shortest distance from 'src_vertex' to vertex i.
@@ -50,9 +50,9 @@ bfs_result bfs(const adjacency_matrix &m, int src_vertex) {
     return {src_vertex, dist, parent};
 }
 
-adjacency_matrix setup_disconnected_adjacency_matrix(int vertices) {
+adj_matrix setup_disconnected_adjacency_matrix(int vertices) {
     // Fill all edges with infinity by default.
-    adjacency_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
+    adj_matrix result(vertices, std::vector<double>(vertices, POSITIVE_INFINITY));
     // Assuming the distance for a vertex to reach itself is 0.
     for (int i = 0; i < vertices; ++i) {
         result[i][i] = 0;
@@ -90,7 +90,7 @@ void display_all_shortest_paths(const bfs_result &result) {
 int main() {
     std::cout << "Example 1" << std::endl;  // resources/digraph_unweighted.svg
     {
-        adjacency_matrix m = setup_disconnected_adjacency_matrix(12);
+        adj_matrix m = setup_disconnected_adjacency_matrix(12);
         m[0][1] = 1;
         m[1][2] = 1;
         m[1][3] = 1;
