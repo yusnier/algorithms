@@ -1,10 +1,4 @@
-/**
- * An implementation of Kruskal's MST algorithm using an edge list Time Complexity: O(ElogE)
- *
- * @author Yusnier M. Sosa, yusnier.msv@gmail.com
- */
 #include <algorithm>
-#include <cassert>
 #include <iostream>
 #include <vector>
 
@@ -18,7 +12,6 @@ private:
     std::vector<int> sz;
 public:
     explicit UnionFind(int size) : components(size), id(size, 0), sz(size, 0) {
-        assert(size >= 0);
         for (int i = 0; i < size; ++i) {
             id[i] = i;  // Link to itself (self root).
             sz[i] = 1;  // Each component is originally of size one.
@@ -79,12 +72,11 @@ public:
 struct edge {
     int from, to;
     double cost;
-    edge(int from, int to, int cost): from(from), to(to), cost(cost) {}
 };
 
 struct kruskal_result {
     const double min_cost;
-    const std::vector<edge> mts;
+    const std::vector<edge> mst;
 };
 
 kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
@@ -119,18 +111,39 @@ kruskal_result kruskal(int vertices, const std::vector<edge> &edges) {
 }
 
 void display_minimum_spanning_tree(const kruskal_result &result) {
-    if (result.mts.empty()) {
+    if (result.mst.empty()) {
         std::cout << "No Minimum Spanning Tree (MST) found" << std::endl;
         return;
     }
-    std::cout << "MTS Cost: " << result.min_cost << std::endl;
-    for (const auto &edge: result.mts) {
-        std::cout << "Used edge (" << edge.from << ", " << edge.to << ") with cost: " << edge.cost << std::endl;
+    std::cout << "MST cost: " << result.min_cost << std::endl;
+    for (const auto &edge: result.mst) {
+        std::cout << "(" << edge.from << ", " << edge.to << ") -> " << edge.cost << std::endl;
     }
 }
 
 int main() {
-    std::cout << "Example 1" << std::endl;  // https://www.youtube.com/watch?v=JZBQLXgSGfs
+    std::cout << "Example 1" << std::endl;  // resources/graph_weighted_1.svg
+    {
+        const std::vector<edge> edges = {
+                {0, 1, 10},
+                {0, 2, 1},
+                {0, 3, 4},
+                {1, 2, 3},
+                {1, 4, 0},
+                {2, 3, 2},
+                {2, 5, 8},
+                {3, 5, 2},
+                {3, 6, 7},
+                {4, 5, 1},
+                {4, 7, 8},
+                {5, 6, 6},
+                {5, 7, 9},
+                {6, 7, 12},
+        };
+        const kruskal_result result = kruskal(8, edges);
+        display_minimum_spanning_tree(result);
+    }
+    std::cout << "Example 2" << std::endl;  // resources/graph_weighted_2.svg
     {
         const std::vector<edge> edges = {
                 {0, 1, 5},
